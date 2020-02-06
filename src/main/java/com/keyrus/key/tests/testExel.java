@@ -1,7 +1,9 @@
 package com.keyrus.key.tests;
 
-import com.keyrus.key.core.ExecutionManager;
-import com.keyrus.key.pages.GoogleHomePage;
+import com.keyrus.key.core.Element;
+import com.keyrus.key.core.Evidence;
+import com.keyrus.key.core.EvidenceManager;
+import com.keyrus.key.enums.Action;
 import com.keyrus.key.utilities.AzureUtils;
 
 public class testExel {
@@ -12,11 +14,31 @@ public class testExel {
 
 	public static void main(String[] args) {
 
-		ExecutionManager manager = new ExecutionManager("Teste", "Teste Excel");
-		GoogleHomePage googleHomePage = new GoogleHomePage();
+		EvidenceManager evdManager = new EvidenceManager();
 
-		googleHomePage.openGoogleHomePage();
-		googleHomePage.searchForByGoogleSearchButton("Teste");
+		Element element = new Element("Teste", "Teste");
+
+		String path = System.getProperty("user.dir");
+		String imgPath = path + "\\evidence\\sample\\sample1.png";
+		String imgPath2 = path + "\\evidence\\sample\\sample2.png";
+
+		Evidence evidence1 = new Evidence(Action.CLICK, element, imgPath, imgPath2);
+		Evidence evidence2 = new Evidence(Action.SENDKEYS, element, imgPath, imgPath2);
+		Evidence evidence3 = new Evidence(Action.GET, element, imgPath, imgPath2);
+		Evidence evidence4 = new Evidence(Action.GETATTRIBUTE, element, imgPath, imgPath2);
+
+		evdManager.addEvidence(evidence1);
+		evdManager.addEvidence(evidence2);
+		evdManager.addEvidence(evidence3);
+		evdManager.addEvidence(evidence4);
+
+		evdManager.generateEvidenceFile();
+
+		//ExecutionManager manager = new ExecutionManager("Teste", "Teste Excel");
+		//GoogleHomePage googleHomePage = new GoogleHomePage();
+
+		//googleHomePage.openGoogleHomePage();
+		//googleHomePage.searchForByGoogleSearchButton("Teste");
 
 		//DSL dsl = new DSL();
 		//WebDriver driver = DriverFactory.getDriver();

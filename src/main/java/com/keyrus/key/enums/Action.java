@@ -1,4 +1,4 @@
-package com.keyrus.key.core.enums;
+package com.keyrus.key.enums;
 
 public enum Action {
     GETATTRIBUTE("Get Attribute", "GetAttribute"),

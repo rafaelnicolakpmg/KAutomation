@@ -1,5 +1,6 @@
 package com.keyrus.key.core;
 
+import com.keyrus.key.enums.Action;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -22,15 +23,15 @@ public class ExecutionManager {
         this.scrShot = (TakesScreenshot) driver;
         this.scenarioName = scenarioName;
         this.testName = testName;
-        this.evidencesPath = createScreenshotFolder();
+        this.evidencesPath = setEvidencesPath();
     }
 
-    public String createScreenshotFolder(){
+    public String setEvidencesPath(){
         Date dNow = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("hhmmss");
+        SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy_hh-mm-ss");
         String folderName = ft.format(dNow);
 
-        String evidenceFolderPath = dir + "\\evidence\\" + folderName + "\\" + this.scenarioName + "\\" + this.testName + "\\";
+        String evidenceFolderPath = dir + "\\evidence\\" + this.scenarioName + "\\" + this.testName + "\\" + folderName + "\\";
 
         File createEvdFolder = new File(evidenceFolderPath);
         createEvdFolder.mkdir();
@@ -51,7 +52,7 @@ public class ExecutionManager {
         return actionLabel;
     }
 
-    public void takeScreenshot(Action action){
+    public String takeScreenshot(Action action){
         File file = this.scrShot.getScreenshotAs(OutputType.FILE);
 
         String label = createActionLabel(action) + ".png";
@@ -62,5 +63,6 @@ public class ExecutionManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return finalFile.getAbsolutePath();
     }
 }

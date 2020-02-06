@@ -1,6 +1,6 @@
 package com.keyrus.key.pages;
 
-import com.keyrus.key.core.Action;
+import com.keyrus.key.enums.Action;
 import com.keyrus.key.core.BasePage;
 import com.keyrus.key.core.DSL;
 import com.keyrus.key.maps.GoogleHomeMap;
