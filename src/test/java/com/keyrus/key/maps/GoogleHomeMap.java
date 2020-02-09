@@ -5,7 +5,7 @@ import com.keyrus.key.core.Element;
 
 public class GoogleHomeMap extends BasePage {
     //URLs
-    public final String googleURL = "https://www.google.com.br";
+    public Element googleURL = new Element("URL", "https://www.google.com.br");
 
     // TextFields
     public Element searchBarTextField = new Element("xpath", "//input[@aria-label='Pesquisar']");

@@ -1,13 +1,22 @@
 package com.keyrus.key.pages;
 
+import com.keyrus.key.core.ExecutionManager;
 import com.keyrus.key.enums.Action;
 import com.keyrus.key.core.BasePage;
 import com.keyrus.key.core.DSL;
 import com.keyrus.key.maps.GoogleHomeMap;
 
 public class GoogleHomePage extends BasePage {
+
     private GoogleHomeMap map = new GoogleHomeMap();
-    private DSL dsl = new DSL();
+
+    private ExecutionManager executionManager;
+    private DSL dsl;
+
+    public GoogleHomePage(ExecutionManager executionManager){
+        this.executionManager = executionManager;
+        dsl = new DSL(this.executionManager);
+    }
 
     public void openGoogleHomePage(){
         dsl.performAction(Action.GET, map.googleURL);

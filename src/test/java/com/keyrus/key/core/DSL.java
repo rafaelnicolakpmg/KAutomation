@@ -7,12 +7,15 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.keyrus.key.core.DriverFactory.getDriver;
-
 public class DSL {
 
+    private ExecutionManager executionManager;
+
+    public DSL(ExecutionManager executionManager){
+        this.executionManager = executionManager;
+    }
+
     private WebDriver driver = DriverFactory.getDriver();
-    private ExecutionManager manager = new ExecutionManager("Teste", "Teste Excel");
     private int elementTimeout = 5;
 
     /**
@@ -23,10 +26,11 @@ public class DSL {
      *                E.g.: performAction(Action.CLICK, element);
      */
     public void performAction(Action action, Element element) {
-        WebElement webElement = getWebElement(element);
-        if(webElement == null){
-            webElement = simpleGetWebElement(element);
-        }
+
+        WebElement webElement = element.getWebElement(action);
+
+        executionManager.setTempScreenshotBefore(action);
+
         switch (action) {
             case CLICK:
                 clickElement(webElement);
@@ -34,25 +38,14 @@ public class DSL {
             case SWITCHTOFRAME:
                 switchToFrame(webElement);
                 break;
-        }
-        manager.takeScreenshot(action);
-        driver.switchTo().parentFrame();
-    }
-
-    /**
-     * Perform action on elements with the following parameters:
-     *
-     * @param action Action
-     * @param value  String
-     *               E.g.: performAction(Action.GET, value);
-     */
-    public void performAction(Action action, String value) {
-        switch (action) {
             case GET:
-                get(value);
+                get(element.getURL());
                 break;
         }
-        manager.takeScreenshot(action);
+
+        executionManager.setTempScreenshotAfter(action);
+        executionManager.consolidateActionInfo(action, element);
+        driver.switchTo().parentFrame();
     }
 
     /**
@@ -65,7 +58,8 @@ public class DSL {
      * E.g.: String value = performAction(Action.GETATTRIBUTE, element, "title");
      */
     public String performAction(Action action, Element element, String searchValue) {
-        WebElement webElement = getWebElement(element);
+        executionManager.setTempScreenshotBefore(action);
+        WebElement webElement = getWebElement(element, action);
         String value = null;
         switch (action) {
             case SENDKEYS:
@@ -78,7 +72,8 @@ public class DSL {
                 value = getAttribute(webElement, searchValue);
                 break;
         }
-        manager.takeScreenshot(action);
+        executionManager.setTempScreenshotAfter(action);
+        executionManager.consolidateActionInfo(action, element);
         return value;
     }
 
@@ -91,7 +86,8 @@ public class DSL {
      *                E.g.: performAction(Action.SENDKEYS, element, Keys.ENTER);
      */
     public void performAction(Action action, Element element, Keys keys) {
-        WebElement webElement = getWebElement(element);
+        executionManager.setTempScreenshotBefore(action);
+        WebElement webElement = getWebElement(element, action);
         switch (action) {
             case SENDKEYS:
                 sendKeys(webElement, keys);
@@ -100,7 +96,8 @@ public class DSL {
                 clearSendKeys(webElement, keys);
                 break;
         }
-        manager.takeScreenshot(action);
+        executionManager.setTempScreenshotAfter(action);
+        executionManager.consolidateActionInfo(action, element);
     }
 
     /********* Actions ************************/
@@ -156,8 +153,11 @@ public class DSL {
         }
     }
 
-    private WebElement getWebElement(Element element) {
+    private WebElement getWebElement(Element element, Action action) {
         WebElement webElement = null;
+        if(action == Action.GET){
+            return webElement;
+        }
         boolean isDisplayed = false;
         int attempts = 1;
         do {
@@ -174,6 +174,10 @@ public class DSL {
                 }
             }
         } while (isDisplayed == false && attempts <= this.elementTimeout);
+
+        if(webElement == null){
+            webElement = simpleGetWebElement(element);
+        }
 
         return webElement;
     }
@@ -207,13 +211,13 @@ public class DSL {
 
 
     public String obterValorCampo(String id_campo) {
-        return getDriver().findElement(By.id(id_campo)).getAttribute("value");
+        return DriverFactory.getDriver().findElement(By.id(id_campo)).getAttribute("value");
     }
 
     /********* Radio e Check ************/
 
     public void clicarRadio(By by) {
-        getDriver().findElement(by).click();
+        DriverFactory.getDriver().findElement(by).click();
     }
 
     public void clicarRadio(String id) {
@@ -221,15 +225,15 @@ public class DSL {
     }
 
     public boolean isRadioMarcado(String id) {
-        return getDriver().findElement(By.id(id)).isSelected();
+        return DriverFactory.getDriver().findElement(By.id(id)).isSelected();
     }
 
     public void clicarCheck(String id) {
-        getDriver().findElement(By.id(id)).click();
+        DriverFactory.getDriver().findElement(By.id(id)).click();
     }
 
     public boolean isCheckMarcado(String id) {
-        return getDriver().findElement(By.id(id)).isSelected();
+        return DriverFactory.getDriver().findElement(By.id(id)).isSelected();
     }
 
     /********* Combo ************/
@@ -245,19 +249,19 @@ public class DSL {
     }
 
     public void deselecionarCombo(String id, String valor) {
-        WebElement element = getDriver().findElement(By.id(id));
+        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
         Select combo = new Select(element);
         combo.deselectByVisibleText(valor);
     }
 
     public String obterValorCombo(String id) {
-        WebElement element = getDriver().findElement(By.id(id));
+        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
         Select combo = new Select(element);
         return combo.getFirstSelectedOption().getText();
     }
 
     public List<String> obterValoresCombo(String id) {
-        WebElement element = getDriver().findElement(By.id("elementosForm:esportes"));
+        WebElement element = DriverFactory.getDriver().findElement(By.id("elementosForm:esportes"));
         Select combo = new Select(element);
         List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
         List<String> valores = new ArrayList<String>();
@@ -268,14 +272,14 @@ public class DSL {
     }
 
     public int obterQuantidadeOpcoesCombo(String id) {
-        WebElement element = getDriver().findElement(By.id(id));
+        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
         Select combo = new Select(element);
         List<WebElement> options = combo.getOptions();
         return options.size();
     }
 
     public boolean verificarOpcaoCombo(String id, String opcao) {
-        WebElement element = getDriver().findElement(By.id(id));
+        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
         Select combo = new Select(element);
         List<WebElement> options = combo.getOptions();
         for (WebElement option : options) {
@@ -298,19 +302,19 @@ public class DSL {
     }
 
     public String obterValueElemento(String id) {
-        return getDriver().findElement(By.id(id)).getAttribute("value");
+        return DriverFactory.getDriver().findElement(By.id(id)).getAttribute("value");
     }
 
     /********* Link ************/
 
     public void clicarLink(String link) {
-        getDriver().findElement(By.linkText(link)).click();
+        DriverFactory.getDriver().findElement(By.linkText(link)).click();
     }
 
     /********* Textos ************/
 
     public String obterTexto(By by) {
-        return getDriver().findElement(by).getText();
+        return DriverFactory.getDriver().findElement(by).getText();
     }
 
     public String obterTexto(String id) {
@@ -320,12 +324,12 @@ public class DSL {
     /********* Alerts ************/
 
     public String alertaObterTexto() {
-        Alert alert = getDriver().switchTo().alert();
+        Alert alert = DriverFactory.getDriver().switchTo().alert();
         return alert.getText();
     }
 
     public String alertaObterTextoEAceita() {
-        Alert alert = getDriver().switchTo().alert();
+        Alert alert = DriverFactory.getDriver().switchTo().alert();
         String valor = alert.getText();
         alert.accept();
         return valor;
@@ -333,7 +337,7 @@ public class DSL {
     }
 
     public String alertaObterTextoENega() {
-        Alert alert = getDriver().switchTo().alert();
+        Alert alert = DriverFactory.getDriver().switchTo().alert();
         String valor = alert.getText();
         alert.dismiss();
         return valor;
@@ -341,7 +345,7 @@ public class DSL {
     }
 
     public void alertaEscrever(String valor) {
-        Alert alert = getDriver().switchTo().alert();
+        Alert alert = DriverFactory.getDriver().switchTo().alert();
         alert.sendKeys(valor);
         alert.accept();
     }
@@ -349,21 +353,21 @@ public class DSL {
     /********* Frames e Janelas ************/
 
     public void entrarFrame(String id) {
-        getDriver().switchTo().frame(id);
+        DriverFactory.getDriver().switchTo().frame(id);
     }
 
     public void sairFrame() {
-        getDriver().switchTo().defaultContent();
+        DriverFactory.getDriver().switchTo().defaultContent();
     }
 
     public void trocarJanela(String id) {
-        getDriver().switchTo().window(id);
+        DriverFactory.getDriver().switchTo().window(id);
     }
 
     /************** JS *********************/
 
     public Object executarJS(String cmd, Object... param) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        JavascriptExecutor js = (JavascriptExecutor) DriverFactory.getDriver();
         return js.executeScript(cmd, param);
     }
 
@@ -371,7 +375,7 @@ public class DSL {
 
     public void clicarBotaoTabela(String colunaBusca, String valor, String colunaBotao, String idTabela) {
         //procurar coluna do registro
-        WebElement tabela = getDriver().findElement(By.xpath("//*[@id='elementosForm:tableUsuarios']"));
+        WebElement tabela = DriverFactory.getDriver().findElement(By.xpath("//*[@id='elementosForm:tableUsuarios']"));
         int idColuna = obterIndiceColuna(colunaBusca, tabela);
 
         //encontrar a linha do registro

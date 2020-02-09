@@ -1,10 +1,10 @@
 package com.keyrus.key.tests;
 
+import com.keyrus.key.utilities.AzureUtils;
 import com.keyrus.key.core.Element;
 import com.keyrus.key.core.Evidence;
 import com.keyrus.key.core.EvidenceManager;
 import com.keyrus.key.enums.Action;
-import com.keyrus.key.utilities.AzureUtils;
 
 public class testExel {
 
@@ -14,7 +14,7 @@ public class testExel {
 
 	public static void main(String[] args) {
 
-		EvidenceManager evdManager = new EvidenceManager();
+		EvidenceManager evdManager = new EvidenceManager("teste", "teste", "");
 
 		Element element = new Element("Teste", "Teste");
 

@@ -11,32 +11,40 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExecutionManager {
-    private WebDriver driver = DriverFactory.getDriver();
+public class ScreenShotter {
+
+    private WebDriver driver = DriverFactory.getDriver(); //colocar no construtor a instanciação
     private TakesScreenshot scrShot;
-    private String dir = System.getProperty("user.dir");
+    private String dir = System.getProperty("user.dir"); //Corrigir com uma varialve no utils
     private String scenarioName;
-    private String testName;
+    private String testCaseName;
     private String evidencesPath;
 
-    public ExecutionManager(String scenarioName, String testName){
+    // Constructors
+
+    public ScreenShotter(String scenarioName, String testCaseName, String evidencesPath) {
         this.scrShot = (TakesScreenshot) driver;
-        this.scenarioName = scenarioName;
-        this.testName = testName;
-        this.evidencesPath = setEvidencesPath();
+        this.setScenarioName(scenarioName);
+        this.setTestCaseName(testCaseName);
+        this.setEvidencesPath(evidencesPath);
     }
 
-    public String setEvidencesPath(){
-        Date dNow = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy_hh-mm-ss");
-        String folderName = ft.format(dNow);
+    // Setters & Getters
 
-        String evidenceFolderPath = dir + "\\evidence\\" + this.scenarioName + "\\" + this.testName + "\\" + folderName + "\\";
+    public void setTestCaseName(String testCaseName){
+        this.testCaseName = testCaseName;
+    }
 
-        File createEvdFolder = new File(evidenceFolderPath);
-        createEvdFolder.mkdir();
+    public void setScenarioName(String scenarioName){
+        this.scenarioName = scenarioName;
+    }
 
-        return evidenceFolderPath;
+    public void setEvidencesPath(String evidencesPath){
+        this.evidencesPath = evidencesPath;
+    }
+
+    public String getEvidencePath(){
+        return this.evidencesPath;
     }
 
     public String timeStamp(SimpleDateFormat ft){
