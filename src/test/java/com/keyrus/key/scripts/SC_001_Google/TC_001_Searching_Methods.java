@@ -5,23 +5,15 @@ import com.keyrus.key.pages.GoogleHomePage;
 import com.keyrus.key.pages.GoogleLoginPage;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
 
 public class TC_001_Searching_Methods extends BaseTest {
 
     private GoogleHomePage googleHome;
     private GoogleLoginPage googleLogin;
 
-    @Rule public TestName name = new TestName();
-
     @Before
     public void BeforeExecution(){
-
-        String methodName = name.getMethodName();
-        executionManager.setRunProperties(getClass().getPackageName().split("[.]") [4], methodName);
-        executionManager.startExecution();
 
         googleHome = new GoogleHomePage(executionManager);
         googleLogin = new GoogleLoginPage(executionManager);

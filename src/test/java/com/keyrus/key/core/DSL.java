@@ -17,6 +17,7 @@ public class DSL {
 
     private WebDriver driver = DriverFactory.getDriver();
     private int elementTimeout = 5;
+    private boolean highlightElement = true;
 
     /**
      * Perform action on elements with the following parameters:
@@ -29,7 +30,11 @@ public class DSL {
 
         WebElement webElement = element.getWebElement(action);
 
+        element.hgihlightElement(action);
+
         executionManager.setTempScreenshotBefore(action);
+
+        element.unhighlightElement(action);
 
         switch (action) {
             case CLICK:
@@ -58,8 +63,15 @@ public class DSL {
      * E.g.: String value = performAction(Action.GETATTRIBUTE, element, "title");
      */
     public String performAction(Action action, Element element, String searchValue) {
-        executionManager.setTempScreenshotBefore(action);
+
         WebElement webElement = getWebElement(element, action);
+
+        element.hgihlightElement(action);
+
+        executionManager.setTempScreenshotBefore(action);
+
+        element.unhighlightElement(action);
+
         String value = null;
         switch (action) {
             case SENDKEYS:
@@ -86,8 +98,14 @@ public class DSL {
      *                E.g.: performAction(Action.SENDKEYS, element, Keys.ENTER);
      */
     public void performAction(Action action, Element element, Keys keys) {
-        executionManager.setTempScreenshotBefore(action);
         WebElement webElement = getWebElement(element, action);
+
+        element.hgihlightElement(action);
+
+        executionManager.setTempScreenshotBefore(action);
+
+        element.unhighlightElement(action);
+
         switch (action) {
             case SENDKEYS:
                 sendKeys(webElement, keys);

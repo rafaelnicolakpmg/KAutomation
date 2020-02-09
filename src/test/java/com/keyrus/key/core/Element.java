@@ -1,10 +1,7 @@
 package com.keyrus.key.core;
 
 import com.keyrus.key.enums.Action;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.util.List;
 
@@ -42,6 +39,10 @@ public class Element {
 
     public String getElementString(){
         return "By." + this.inputMethod + "(\"" + this.expression + "\")";
+    }
+
+    public WebElement simpleGetWebElement(Action action){
+        return driver.findElement(getBy());
     }
 
     public WebElement getWebElement(Action action) {
@@ -107,6 +108,26 @@ public class Element {
         else{System.out.println("Input Method: " + this.inputMethod + " doesn't exists!");}
 
         return by;
+    }
+
+    public void hgihlightElement(Action action){
+        if(action != Action.GET){
+
+            WebElement element = simpleGetWebElement(action);
+
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].setAttribute('style', 'border: 2px solid red;');", element);
+        }
+    }
+
+    public void unhighlightElement(Action action){
+        if(action != Action.GET){
+
+            WebElement element = simpleGetWebElement(action);
+
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].removeAttribute('style', '')", element);
+        }
     }
 
     public String getURL(){
