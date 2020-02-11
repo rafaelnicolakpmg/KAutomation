@@ -37,4 +37,10 @@ public class GoogleHomePage extends BasePage {
         dsl.performAction(Action.CLICK, map.googleApps);
         dsl.performAction(Action.CLICK, map.getAppFromGoogleAppsMenu("Agenda"));
     }
+
+    public void openMapsOnGoogleApps(){
+        dsl.performAction(Action.CLICK, map.googleApps);
+        dsl.performAction(Action.SWITCHTOFRAME, map.googleAppsFrame);
+        dsl.performAction(Action.CLICK, map.getAppFromGoogleAppsMenu("Maps"));
+    }
 }

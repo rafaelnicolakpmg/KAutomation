@@ -1,9 +1,8 @@
-package com.keyrus.key.scripts.SC_001_Google;
+package com.keyrus.key.scripts;
 
 import com.keyrus.key.core.BaseTest;
 import com.keyrus.key.pages.GoogleHomePage;
 import com.keyrus.key.pages.GoogleLoginPage;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,11 +16,6 @@ public class TC_001_Searching_Methods extends BaseTest {
 
         googleHome = new GoogleHomePage(executionManager);
         googleLogin = new GoogleLoginPage(executionManager);
-    }
-
-    @After
-    public void AfterExecution(){
-        this.executionManager.generateDocuments();
     }
 
     @Test

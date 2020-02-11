@@ -7,28 +7,25 @@ import org.junit.rules.TestName;
 
 import java.io.IOException;
 
-import static com.keyrus.key.core.DriverFactory.killDriver;
-
 public class BaseTest {
 
 	protected ExecutionManager executionManager;
+	protected DataManager dataManager;
 
 	@Rule
 	public TestName name = new TestName();
 
 	@Before
 	public void BaseTestBefore(){
-		executionManager = new ExecutionManager();
-		String methodName = name.getMethodName();
-		executionManager.setRunProperties(getClass().getPackageName().split("[.]") [4], methodName);
-		executionManager.startExecution();
+		String scenario = getClass().getSimpleName();
+		String testCase = name.getMethodName();
+		executionManager = new ExecutionManager(scenario, testCase);
+		dataManager = executionManager.getDataManager();
 	}
 
 	@After
 	public void finaliza() throws IOException{
-		if(Propriedades.FECHAR_BROWSER) {
-			killDriver();
-		}
+		this.executionManager.finishExecution();
 	}
 
 }

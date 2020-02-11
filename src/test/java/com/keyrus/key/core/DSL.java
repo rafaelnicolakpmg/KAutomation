@@ -50,7 +50,7 @@ public class DSL {
 
         executionManager.setTempScreenshotAfter(action);
         executionManager.consolidateActionInfo(action, element);
-        driver.switchTo().parentFrame();
+        this.switchToParentFrame(action, webElement);
     }
 
     /**
@@ -134,6 +134,12 @@ public class DSL {
 
     private void switchToFrame(WebElement element){
         driver.switchTo().frame(element);
+    }
+
+    private void switchToParentFrame(Action action, WebElement element){
+        if(action != Action.SWITCHTOFRAME){
+            driver.switchTo().parentFrame();
+        }
     }
 
     /********* SendKeys ************************/

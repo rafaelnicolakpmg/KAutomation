@@ -14,10 +14,16 @@ public class ExcelUtils {
     private FileInputStream arquivo;
     private FileOutputStream outFile;
     private XSSFWorkbook workbook;
+    private String excelFilePath;
 
 
     public ExcelUtils(String excelFilePath, String sheetName){
         this.sheetName = sheetName;
+        this.excelFilePath = excelFilePath;
+        this.openWorkbook();
+    }
+
+    private void openWorkbook(){
         try {
             this.arquivo = new FileInputStream(new File(excelFilePath));
             this.workbook = new XSSFWorkbook(this.arquivo);
@@ -93,11 +99,9 @@ public class ExcelUtils {
         Cell cell = row.getCell(columnIndex);
         cell.setCellValue(value);
 
-
-
     }
 
-    public void killWorkbook(){
+    public void closeWorkbook(){
         try {
             this.workbook.write(outFile);
             this.arquivo.close();

@@ -16,7 +16,7 @@ public class GoogleHomeMap extends BasePage {
     public Element googleApps = new Element("xpath", "//a[@title='Google Apps']");
 
     // Frames
-    public Element googleAppsFrame = new Element("xpath", "//iframe[contains(@src, 'https://ogs.google.com/widget/app/')]");
+    public Element googleAppsFrame = new Element("xpath", "//iframe[contains(@src, 'https://ogs.google.com')]");
     public Element googleBody = new Element("xpath", "//body");
 
     // Google Apps Menu
