@@ -2,11 +2,14 @@ package com.keyrus.key.core;
 
 import com.keyrus.key.enums.TestStatus;
 import com.keyrus.key.enums.Action;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +56,16 @@ public class EvidenceManager {
     public void generateEvidenceFile() {
         String path = System.getProperty("user.dir");
 
-        XWPFDocument doc = new XWPFDocument();
+        //XWPFDocument doc = new XWPFDocument();
+
+        XWPFDocument doc = null;
+        try {
+            doc = new XWPFDocument(OPCPackage.open(path + "\\sample\\EvidenceTemplate.docx"));
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         XWPFParagraph header = doc.createParagraph();
         XWPFRun runHeader = header.createRun();
