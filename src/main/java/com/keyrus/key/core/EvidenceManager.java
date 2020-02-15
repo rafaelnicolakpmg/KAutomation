@@ -106,7 +106,7 @@ public class EvidenceManager {
                     run.setText(".:After Action:.");
                     run.addBreak();
                     run.addBreak();
-                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(424), Units.toEMU(190));
+                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(522), Units.toEMU(234));
 
                     fisImgAfter.close();
 
@@ -118,7 +118,7 @@ public class EvidenceManager {
                     run.setText(".:Before Action:.");
                     run.addBreak();
                     run.addBreak();
-                    run.addPicture(fisImgBefore, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotBefore(), Units.toEMU(424), Units.toEMU(190)); // 200x200 pixels
+                    run.addPicture(fisImgBefore, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotBefore(), Units.toEMU(522), Units.toEMU(234)); // 200x200 pixels
 
                     run.addBreak();
                     run.addBreak();
@@ -126,7 +126,7 @@ public class EvidenceManager {
                     run.setText(".:After Action:.");
                     run.addBreak();
                     run.addBreak();
-                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(424), Units.toEMU(190));
+                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(522), Units.toEMU(234));
 
                     fisImgBefore.close();
                     fisImgAfter.close();
