@@ -138,7 +138,7 @@ public class DSL {
 
     private void switchToParentFrame(Action action, WebElement element){
         if(action != Action.SWITCHTOFRAME){
-            driver.switchTo().parentFrame();
+            //driver.switchTo().parentFrame();
         }
     }
 

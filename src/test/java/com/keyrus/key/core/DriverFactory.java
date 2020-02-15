@@ -5,17 +5,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
+import java.util.logging.FileHandler;
+
 public class DriverFactory {
 	
 	private static WebDriver driver;
 	
 	private DriverFactory() {}
 	
-	private static String driverPath = System.getProperty("user.dir") + "//drivers//chromedriver.exe";
+	private static String driverPath;
 	
 	private static ChromeOptions options = new ChromeOptions();
 	
 	public static WebDriver getDriver(){
+		if(System.getProperty("os.name").contains("Windows")){
+			driverPath = System.getProperty("user.dir") + File.separator + "drivers" + File.separator + "chromedriver.exe";
+		} else if(System.getProperty("os.name").contains("Mac")){
+			driverPath = System.getProperty("user.dir") + File.separator + "drivers" + File.separator + "chromedriver";
+		}
+
 		if(driver == null) {
 			System.setProperty("webdriver.chrome.driver", driverPath);
 			options.setExperimentalOption("useAutomationExtension", false);

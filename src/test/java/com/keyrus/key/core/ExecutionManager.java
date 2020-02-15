@@ -61,13 +61,13 @@ public class ExecutionManager {
 
     public String getDataPath(){
         if(this.dataPath == null){
-            this.dataPath = this.projectFolder + "\\data\\" + this.scenarioName + ".xlsx";
+            this.dataPath = this.projectFolder + File.separator + "data" + File.separator + this.scenarioName + ".xlsx";
         }
         return dataPath;
     }
 
     public void setDataPath(){
-        this.dataPath = this.projectFolder + "\\data\\" + this.scenarioName + ".xlsx";
+        this.dataPath = this.projectFolder + File.separator + "data" + File.separator + this.scenarioName + ".xlsx";
     }
 
     public DataManager getDataManager(){
@@ -89,7 +89,7 @@ public class ExecutionManager {
         SimpleDateFormat ft = new SimpleDateFormat("hhmmss");
         String folderName = ft.format(dNow);
 
-        String evidenceFolderPath = this.projectFolder + "\\evidence\\" + this.scenarioName + "\\" + this.testCaseName + "\\" + "Run_" + folderName + "\\";
+        String evidenceFolderPath = this.projectFolder + File.separator + "evidence" + File.separator + this.scenarioName + File.separator + this.testCaseName + File.separator + "Run_" + folderName + File.separator;
 
         File createEvdFolder = new File(evidenceFolderPath);
         createEvdFolder.mkdir();
