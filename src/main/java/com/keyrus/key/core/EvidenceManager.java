@@ -2,11 +2,14 @@ package com.keyrus.key.core;
 
 import com.keyrus.key.enums.TestStatus;
 import com.keyrus.key.enums.Action;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +56,16 @@ public class EvidenceManager {
     public void generateEvidenceFile() {
         String path = System.getProperty("user.dir");
 
-        XWPFDocument doc = new XWPFDocument();
+        //XWPFDocument doc = new XWPFDocument();
+
+        XWPFDocument doc = null;
+        try {
+            doc = new XWPFDocument(OPCPackage.open(path + "\\sample\\EvidenceTemplate.docx"));
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         XWPFParagraph header = doc.createParagraph();
         XWPFRun runHeader = header.createRun();
@@ -94,7 +106,7 @@ public class EvidenceManager {
                     run.setText(".:After Action:.");
                     run.addBreak();
                     run.addBreak();
-                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(424), Units.toEMU(190));
+                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(522), Units.toEMU(234));
 
                     fisImgAfter.close();
 
@@ -106,7 +118,7 @@ public class EvidenceManager {
                     run.setText(".:Before Action:.");
                     run.addBreak();
                     run.addBreak();
-                    run.addPicture(fisImgBefore, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotBefore(), Units.toEMU(424), Units.toEMU(190)); // 200x200 pixels
+                    run.addPicture(fisImgBefore, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotBefore(), Units.toEMU(522), Units.toEMU(234)); // 200x200 pixels
 
                     run.addBreak();
                     run.addBreak();
@@ -114,7 +126,7 @@ public class EvidenceManager {
                     run.setText(".:After Action:.");
                     run.addBreak();
                     run.addBreak();
-                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(424), Units.toEMU(190));
+                    run.addPicture(fisImgAfter, XWPFDocument.PICTURE_TYPE_PNG, evidence.getScreenshotAfter(), Units.toEMU(522), Units.toEMU(234));
 
                     fisImgBefore.close();
                     fisImgAfter.close();
