@@ -6,47 +6,59 @@ import com.keyrus.key.pages.GoogleLoginPage;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SC_001_Google_Apps extends BaseTest {
+public class SC_002_Google_Search extends BaseTest {
 
+    // Pages
     private GoogleHomePage googleHome;
-    private GoogleLoginPage googleLogin;
-    private String vGoogleAccount;
+
+    // Variables From Data
+    private String vSearch;
 
     @Before
     public void BeforeExecution(){
+
         // Pages
         googleHome = new GoogleHomePage(executionManager);
-        googleLogin = new GoogleLoginPage(executionManager);
 
         // Variables from Data
-        vGoogleAccount = dataManager.getData("vGoogleAccount");
+        vSearch = dataManager.getData("vSearch");
+
     }
 
     @Test
-    public void TC_001_Google_Agenda(){
+    public void TC_001_New_Search(){
 
         try {
+
             googleHome.openGoogleHomePage();
-            googleHome.openCalendarOnGoogleApps();
-            googleLogin.loginOnGoogle(vGoogleAccount);
-            executionManager.setActualResult("Google Agenda opened");
+            googleHome.searchForByGoogleSearchButton(vSearch);
+            executionManager.setActualResult("Searched with success");
+
         } catch (Exception e) {
+
             e.printStackTrace();
             executionManager.setActualResult("Failed");
+
         }
+
     }
 
     @Test
-    public void TC_002_Google_Maps(){
+    public void TC_002_Search_by_Feeling_Lucky(){
 
         try {
+
             googleHome.openGoogleHomePage();
-            googleHome.openMapsOnGoogleApps();
-            executionManager.setActualResult("Google Maps opened");
+            googleHome.searchForByGoogleFeelingLuckyButton(vSearch);
+            executionManager.setActualResult("Searched with success");
 
         } catch (Exception e) {
+
             e.printStackTrace();
             executionManager.setActualResult("Failed");
+
         }
+
     }
+
 }

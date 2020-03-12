@@ -7,6 +7,7 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -60,7 +61,7 @@ public class EvidenceManager {
 
         XWPFDocument doc = null;
         try {
-            doc = new XWPFDocument(OPCPackage.open(path + "\\sample\\EvidenceTemplate.docx"));
+            doc = new XWPFDocument(OPCPackage.open(path + File.separator + "sample" + File.separator + "EvidenceTemplate.docx"));
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

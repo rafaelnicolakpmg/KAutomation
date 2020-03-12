@@ -10,6 +10,7 @@ import java.util.Date;
 import static com.keyrus.key.core.DriverFactory.killDriver;
 
 public class ExecutionManager {
+
     private EvidenceManager evidenceManager;
     private ScreenShotter screenShotter;
     private String scenarioName;

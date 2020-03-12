@@ -29,7 +29,6 @@ public class GoogleHomePage extends BasePage {
 
     public void searchForByGoogleFeelingLuckyButton(String value){
         dsl.performAction(Action.SENDKEYS, map.searchBarTextField, value);
-        dsl.performAction(Action.CLICK, map.googleBody);
         dsl.performAction(Action.CLICK, map.feelingLuckyButton);
     }
 

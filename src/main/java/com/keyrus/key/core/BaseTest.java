@@ -1,8 +1,6 @@
 package com.keyrus.key.core;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.*;
 import org.junit.rules.TestName;
 
 import java.io.IOException;
