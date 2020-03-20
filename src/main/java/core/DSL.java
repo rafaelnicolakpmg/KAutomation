@@ -9,22 +9,26 @@ import java.util.List;
 
 public class DSL {
 
+    // Variables
+
     private WebDriver driver = DriverFactory.getDriver();
 
-    /********* Clicks ************************/
+    // Methods
 
-    protected void clickElement(WebElement element) {
-        element.click();
+    // Click
+
+    protected void click(WebElement webElement) {
+        webElement.click();
     }
 
-    /********* Navigations & Switchs ************************/
+    // Navigation
 
     protected void get(String value) {
         driver.get(value);
     }
 
-    protected void switchToFrame(WebElement element){
-        driver.switchTo().frame(element);
+    protected void switchToFrame(WebElement webElement){
+        driver.switchTo().frame(webElement);
     }
 
     protected void switchToParentFrame(Action action){
@@ -33,33 +37,44 @@ public class DSL {
         }
     }
 
-    /********* SendKeys ************************/
-
-    protected void sendKeys(WebElement element, String value) {
-        element.sendKeys(value);
+    protected void switchToDefaultContent(Action action) {
+        if(action != Action.SWITCHTOFRAME){
+            driver.switchTo().defaultContent();
+        }
     }
 
-    protected void sendKeys(WebElement element, Keys keys) {
-        element.sendKeys(keys);
+    protected void switchWindow(String id) {
+        driver.switchTo().window(id);
     }
 
-    protected void clearSendKeys(WebElement element, String text) {
-        element.clear();
-        element.sendKeys(text);
+
+    // Send Keys
+
+    protected void sendKeys(WebElement webElement, String value) {
+        webElement.sendKeys(value);
     }
 
-    protected void clearSendKeys(WebElement element, Keys key) {
-        element.clear();
-        element.sendKeys(key);
+    protected void sendKeys(WebElement webElement, Keys keys) {
+        webElement.sendKeys(keys);
     }
 
-    /********* Waits and Loads ****************/
+    protected void clearSendKeys(WebElement webElement, String text) {
+        webElement.clear();
+        webElement.sendKeys(text);
+    }
 
-    protected void waitLoading(WebElement element, int tries) {
+    protected void clearSendKeys(WebElement webElement, Keys key) {
+        webElement.clear();
+        webElement.sendKeys(key);
+    }
+
+    // Loadings
+
+    protected void waitLoading(WebElement webElement, int tries) {
         int attempts = 0;
-        while (element.isDisplayed() && attempts <= tries) {
+        while (webElement.isDisplayed() && attempts <= tries) {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -68,152 +83,107 @@ public class DSL {
         }
     }
 
-    /********* GetAttributes ****************/
+    // Get Attribute
 
-    protected String getAttribute(WebElement element, String attribute){
-        return element.getAttribute(attribute);
+    protected String getAttribute(WebElement webElement, String attribute){
+        return webElement.getAttribute(attribute);
     }
 
-    /********* TextField e TextArea ************/
+    // Radio & Checkbox
 
-
-    protected String obterValorCampo(String id_campo) {
-        return DriverFactory.getDriver().findElement(By.id(id_campo)).getAttribute("value");
+    public boolean isSelected(WebElement webElement) {
+        return webElement.isSelected();
     }
 
-    /********* Radio e Check ************/
+    // Combo & Select
 
-    public boolean isChecked(String id) {
-        return DriverFactory.getDriver().findElement(By.id(id)).isSelected();
-    }
-
-    /********* Combo ************/
-
-    protected void selectByVisibleText(WebElement element, String valor) {
-        Select combo = new Select(element);
+    protected void selectByVisibleText(WebElement webElement, String valor) {
+        Select combo = new Select(webElement);
         combo.selectByVisibleText(valor);
     }
 
-    protected void selectByIndex(WebElement element, int index) {
-        Select combo = new Select(element);
+    protected void selectByIndex(WebElement webElement, int index) {
+        Select combo = new Select(webElement);
         combo.selectByIndex(index);
     }
 
-    protected void deselecionarCombo(String id, String valor) {
-        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
-        Select combo = new Select(element);
+    protected void deselectByVisibleText(WebElement webElement, String valor) {
+        Select combo = new Select(webElement);
         combo.deselectByVisibleText(valor);
     }
 
-    protected String obterValorCombo(String id) {
-        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
-        Select combo = new Select(element);
+    protected void deselectByIndex(WebElement webElement, int index) {
+        Select combo = new Select(webElement);
+        combo.deselectByIndex(index);
+    }
+
+    protected void deselectAll(WebElement webElement) {
+        Select combo = new Select(webElement);
+        combo.deselectAll();
+    }
+
+    protected String getFirstSelectedOption(WebElement webElement) {
+        Select combo = new Select(webElement);
         return combo.getFirstSelectedOption().getText();
     }
 
-    protected List<String> obterValoresCombo(String id) {
-        WebElement element = DriverFactory.getDriver().findElement(By.id("elementosForm:esportes"));
-        Select combo = new Select(element);
+    protected List<String> getValuesFromCombo(WebElement webElement) {
+        Select combo = new Select(webElement);
         List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
-        List<String> valores = new ArrayList<String>();
+        List<String> values = new ArrayList<String>();
         for (WebElement opcao : allSelectedOptions) {
-            valores.add(opcao.getText());
+            values.add(opcao.getText());
         }
-        return valores;
+        return values;
     }
 
-    protected int obterQuantidadeOpcoesCombo(String id) {
-        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
-        Select combo = new Select(element);
+    protected int getAmountOfOptions(WebElement webElement) {
+        Select combo = new Select(webElement);
         List<WebElement> options = combo.getOptions();
         return options.size();
     }
 
-    protected boolean verificarOpcaoCombo(String id, String opcao) {
-        WebElement element = DriverFactory.getDriver().findElement(By.id(id));
-        Select combo = new Select(element);
+    protected boolean verifyComboOption(WebElement webElement, String targetOptionValue) {
+        Select combo = new Select(webElement);
         List<WebElement> options = combo.getOptions();
         for (WebElement option : options) {
-            if (option.getText().equals(opcao)) {
+            if (option.getText().equals(targetOptionValue)) {
                 return true;
             }
         }
         return false;
     }
 
-    /********* Botao ************/
+    // Get Text
 
-    protected void click(WebElement element) {
-        element.click();
+    protected String getText(WebElement webElement) {
+        return webElement.getText();
     }
 
-    protected String obterValueElemento(String id) {
-        return DriverFactory.getDriver().findElement(By.id(id)).getAttribute("value");
-    }
+    // Alerts
 
-    /********* Link ************/
-
-    protected void clicarLink(String link) {
-        DriverFactory.getDriver().findElement(By.linkText(link)).click();
-    }
-
-    /********* Textos ************/
-
-    protected String obterTexto(By by) {
-        return DriverFactory.getDriver().findElement(by).getText();
-    }
-
-    /********* Alerts ************/
-
-    protected String alertaObterTexto() {
+    protected String getAlertText() {
         Alert alert = DriverFactory.getDriver().switchTo().alert();
         return alert.getText();
     }
 
-    protected String alertaObterTextoEAceita() {
+    protected void acceptAlert() {
         Alert alert = DriverFactory.getDriver().switchTo().alert();
-        String valor = alert.getText();
         alert.accept();
-        return valor;
-
     }
 
-    protected String alertaObterTextoENega() {
+    protected void dismissAlert() {
         Alert alert = DriverFactory.getDriver().switchTo().alert();
-        String valor = alert.getText();
         alert.dismiss();
-        return valor;
-
     }
 
-    protected void alertaEscrever(String valor) {
+    protected void sendKeysAlert(String valor) {
         Alert alert = DriverFactory.getDriver().switchTo().alert();
         alert.sendKeys(valor);
         alert.accept();
     }
 
-    /********* Frames e Janelas ************/
-
-    protected void entrarFrame(String id) {
-        DriverFactory.getDriver().switchTo().frame(id);
-    }
-
-    protected void sairFrame() {
-        DriverFactory.getDriver().switchTo().defaultContent();
-    }
-
-    protected void trocarJanela(String id) {
-        DriverFactory.getDriver().switchTo().window(id);
-    }
-
-    /************** JS *********************/
-
-    protected Object executarJS(String cmd, Object... param) {
-        JavascriptExecutor js = (JavascriptExecutor) DriverFactory.getDriver();
-        return js.executeScript(cmd, param);
-    }
-
-    /************** Tabela *********************/
+    // Tables
 
     protected void clicarBotaoTabela(String colunaBusca, String valor, String colunaBotao, String idTabela) {
         //procurar coluna do registro

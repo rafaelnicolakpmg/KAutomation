@@ -54,6 +54,28 @@ public class ActionManager extends DSL{
     /**
      * Perform action on elements with the following parameters:
      *
+     * @param action Action
+     * @param id ID
+     *
+     * E.g.: performAction(Action.switchWindow, "idWindow");
+     */
+    public void performAction(Action action, String id){
+
+        // beforeAction
+
+        switch (action) {
+            case SWITCHWINDOW:
+                switchWindow(id);
+                break;
+        }
+
+        // afterAction
+
+    }
+
+    /**
+     * Perform action on elements with the following parameters:
+     *
      * @param action  Action
      * @param element Element
      *
@@ -65,13 +87,19 @@ public class ActionManager extends DSL{
 
         switch (action) {
             case CLICK:
-                clickElement(element.getWebElement());
+                click(element.getWebElement());
                 break;
             case SWITCHTOFRAME:
                 switchToFrame(element.getWebElement());
                 break;
             case GET:
                 get(element.getURL());
+                break;
+            case SWITCHTODEFAULTCONTENT:
+                switchToDefaultContent(action);
+                break;
+            case SWITCHTOPARENTFRAME:
+                switchToParentFrame(action);
                 break;
         }
 
@@ -107,6 +135,7 @@ public class ActionManager extends DSL{
                 break;
             case SELECTBYVISIBLETEXT:
                 this.selectByVisibleText(element.getWebElement(), searchValue);
+                break;
         }
 
         afterAction(action, element);

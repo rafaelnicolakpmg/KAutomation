@@ -7,6 +7,9 @@ import org.openqa.selenium.*;
 import java.util.List;
 
 public class Element {
+
+    // Variables
+
     private InputMethod inputMethod;
     private String expression;
     private WebDriver driver;
@@ -68,7 +71,7 @@ public class Element {
                 try {
                     webElement = driver.findElement(getBy());
                     isDisplayed = true;
-                } catch (NoSuchElementException e) {
+                } catch (NoSuchElementException | StaleElementReferenceException e) {
                     System.out.println("Attempt " + attempts + " of " + this.elementTimeout + " on element: " + getElementString());
                     attempts++;
                     try {

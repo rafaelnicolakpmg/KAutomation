@@ -11,6 +11,7 @@ public class SC_001_Google_Apps extends BaseTest {
     private GoogleHomePage googleHome;
     private GoogleLoginPage googleLogin;
     private String vGoogleAccount;
+    private String vGooglePassword;
 
     @Before
     public void BeforeExecution(){
@@ -20,16 +21,19 @@ public class SC_001_Google_Apps extends BaseTest {
 
         // Variables from Data
         vGoogleAccount = dataManager.getData("vGoogleAccount");
+        vGooglePassword = dataManager.getData("vGooglePassword");
     }
 
     @Test
     public void TC_001_Google_Agenda(){
 
         try {
+
             googleHome.openGoogleHomePage();
             googleHome.openCalendarOnGoogleApps();
-            googleLogin.loginOnGoogle(vGoogleAccount);
-            executionManager.setActualResult("Google Agenda opened");
+            googleLogin.loginOnGoogle(vGoogleAccount, vGooglePassword);
+            googleLogin.verifyLoginOnGoogle();
+
         } catch (Exception e) {
             e.printStackTrace();
             executionManager.setActualResult("Failed");
