@@ -37,6 +37,7 @@ public class GoogleHomePage extends BasePage {
 
     public void openCalendarOnGoogleApps(){
         action.performAction(Action.CLICK, map.googleApps);
+        action.performAction(Action.SWITCHTOFRAME, map.googleAppsFrame);
         action.performAction(Action.CLICK, map.getAppFromGoogleAppsMenu("Agenda"));
     }
 

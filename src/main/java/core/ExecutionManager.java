@@ -57,7 +57,7 @@ public class ExecutionManager {
     }
 
     public void setEvidencesPath() {
-        this.evidencesPath = createEvidencesPath();
+        this.evidencesPath = setRunFolderPath();
     }
 
     public String getDataPath(){
@@ -85,17 +85,17 @@ public class ExecutionManager {
         }
     }
 
-    private String createEvidencesPath(){
+    private String setRunFolderPath(){
         Date dNow = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("hhmmss");
+        SimpleDateFormat ft = new SimpleDateFormat("ddMMYYhhmmss");
         String folderName = ft.format(dNow);
 
-        String evidenceFolderPath = this.projectFolder + File.separator + "evidence" + File.separator + this.scenarioName + File.separator + this.testCaseName + File.separator + "Run_" + folderName + File.separator;
+        String runFolderPath = this.projectFolder + File.separator + "evidence" + File.separator + this.scenarioName + File.separator + this.testCaseName + File.separator + "Run_" + folderName + File.separator;
 
-        File createEvdFolder = new File(evidenceFolderPath);
+        File createEvdFolder = new File(runFolderPath);
         createEvdFolder.mkdir();
 
-        return evidenceFolderPath;
+        return runFolderPath;
     }
 
     public void consolidateActionInfo(Action action, Element element){
