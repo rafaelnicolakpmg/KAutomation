@@ -72,14 +72,14 @@ public class DSL {
 
     protected void waitLoading(WebElement webElement, int tries) {
         int attempts = 0;
-        while (webElement.isDisplayed() && attempts <= tries) {
-            try {
+        try {
+            while (webElement.isDisplayed() && attempts <= tries) {
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Waiting on loading, attempt " + attempts + " of " + tries);
+                attempts++;
             }
-            System.out.println("Waiting Element");
-            attempts++;
+        } catch (StaleElementReferenceException | InterruptedException e) {
+            System.out.println("Loading already gone...");
         }
     }
 

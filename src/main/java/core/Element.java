@@ -145,14 +145,60 @@ public class Element {
     public void highlightElement(){
         if(inputMethod != InputMethod.URL){
             JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].setAttribute('style', 'border: 2px solid red;');", this.webElement);
+
+            int y1 = 0;
+
+            try {
+                y1 = ((Long) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().top);", this.webElement)).intValue();
+            } catch (ClassCastException e) {
+                y1 = ((Double) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().top);", this.webElement)).intValue();
+            }
+
+            int x1 = 0;
+
+            try {
+                x1 = ((Long) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().left);", this.webElement)).intValue();
+            } catch (ClassCastException e) {
+                x1 = ((Double) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().left);", this.webElement)).intValue();
+            }
+
+            int y2 = 0;
+
+            try {
+                y2 = ((Long) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().bottom);", this.webElement)).intValue();
+            } catch (ClassCastException e) {
+                y2 = ((Double) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().bottom);", this.webElement)).intValue();
+            }
+
+            int x2 = 0;
+
+            try {
+                x2 = ((Long) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().right);", this.webElement)).intValue();
+            } catch (ClassCastException e) {
+                x2 = ((Double) js.executeScript("return parseFloat(arguments[0].getBoundingClientRect().right);", this.webElement)).intValue();
+            }
+
+            int height = y2 - y1;
+            int width = x2 - x1;
+
+            js.executeScript("var divNova = document.createElement(\"div\");\n" +
+                    "\n" +
+                    "divNova.setAttribute('id', 'ElementHighLightSelenium');\n" +
+                    "\n" +
+                    "var divAtual = document.getElementById(\"div1\");\n" +
+                    "\n" +
+                    "document.body.insertBefore(divNova, divAtual);\n" +
+                    "\n" +
+                    "divNova.setAttribute('style', 'z-index: 2000; position: absolute; left: " + x1 +"px; top: " + y1 + "px; height: "+ height +"px; width: "+ width +"px; border: 2px solid red;');");
         }
     }
 
     public void unhighlightElement(){
         if(inputMethod != InputMethod.URL){
             JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].removeAttribute('style', '')", this.webElement);
+            js.executeScript("var child = document.getElementById('ElementHighLightSelenium');" +
+                    "\n" +
+                    "child.parentNode.removeChild(child);");
         }
     }
 

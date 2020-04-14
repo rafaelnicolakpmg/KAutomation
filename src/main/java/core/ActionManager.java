@@ -149,17 +149,19 @@ public class ActionManager extends DSL{
      *
      * @param action  Action
      * @param element Element
-     * @param index int
+     * @param numValue int
      *
      * E.g.: performAction(Action.SELECTBYINDEX, element, "anyFieldSelect", 2);
      */
-    public void performAction(Action action, Element element, int index) {
+    public void performAction(Action action, Element element, int numValue) {
 
         beforeAction(action, element);
 
         switch (action) {
             case SELECTBYINDEX:
-                this.selectByIndex(element.getWebElement(), index);
+                this.selectByIndex(element.getWebElement(), numValue);
+            case WAITLOADING:
+                this.waitLoading(element.getWebElement(), numValue);
         }
 
         afterAction(action, element);
