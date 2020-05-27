@@ -5,7 +5,6 @@ import core.Element;
 import enums.InputMethod;
 
 public class GoogleHomeMap extends BasePage {
-
     //URLs
 
     public Element googleURL = new Element(InputMethod.URL, "https://www.google.com.br");
@@ -31,5 +30,4 @@ public class GoogleHomeMap extends BasePage {
     public Element getAppFromGoogleAppsMenu(String menuItem){
         return new Element(InputMethod.XPATH, "//span[text()='" + menuItem + "']//preceding-sibling::span/..");
     }
-
 }

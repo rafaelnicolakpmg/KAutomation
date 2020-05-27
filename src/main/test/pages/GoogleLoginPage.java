@@ -1,6 +1,9 @@
 package pages;
 
-import core.*;
+import core.ActionManager;
+import core.BasePage;
+import core.DataManager;
+import core.ExecutionManager;
 import enums.Action;
 import maps.GoogleLoginMap;
 
