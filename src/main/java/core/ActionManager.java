@@ -81,8 +81,9 @@ public class ActionManager extends DSL{
      *
      * E.g.: performAction(Action.CLICK, element);
      */
-    public void performAction(Action action, Element element) {
+    public String performAction(Action action, Element element) {
 
+        String value = null;
         beforeAction(action, element);
 
         switch (action) {
@@ -101,10 +102,13 @@ public class ActionManager extends DSL{
             case SWITCHTOPARENTFRAME:
                 switchToParentFrame(action);
                 break;
+            case GETTEXT:
+                value = getText(element.getWebElement());
         }
 
         afterAction(action, element);
 
+        return value;
     }
 
     /**
