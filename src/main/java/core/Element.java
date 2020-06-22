@@ -109,8 +109,10 @@ public class Element {
     }
 
     public void scrollIntoView(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", getWebElement());
+        if(inputMethod != InputMethod.URL) {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView();", getWebElement());
+        }
     }
 
     public By getBy() {
