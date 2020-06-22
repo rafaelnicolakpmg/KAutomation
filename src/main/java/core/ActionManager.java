@@ -27,6 +27,8 @@ public class ActionManager extends DSL{
 
         element.setWebElement();
 
+        element.scrollIntoView();
+
         element.highlightElement();
 
         executionManager.setTempScreenshotBefore(action);
@@ -100,6 +102,9 @@ public class ActionManager extends DSL{
                 break;
             case SWITCHTOPARENTFRAME:
                 switchToParentFrame(action);
+                break;
+            case SCROLLINTOVIEW:
+                scrollIntoView(element.getWebElement());
                 break;
         }
 

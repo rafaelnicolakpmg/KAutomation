@@ -47,6 +47,10 @@ public class DSL {
         driver.switchTo().window(id);
     }
 
+    protected void scrollIntoView(WebElement webElement){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", webElement);
+    }
 
     // Send Keys
 

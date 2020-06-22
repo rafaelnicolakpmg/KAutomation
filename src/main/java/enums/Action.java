@@ -15,6 +15,7 @@ public enum Action {
     SWITCHTOPARENTFRAME("Switch to Parent Frame", "SwitchToParentFrame"),
     SWITCHTODEFAULTCONTENT("Switch to Default Content", "SwitchToDefaultContent"),
     SWITCHWINDOW("Switch Window", "SwitchWindow"),
+    SCROLLINTOVIEW("Scroll Into View", "ScrollIntoView"),
 
     // Send Keys
 

@@ -108,6 +108,11 @@ public class Element {
         return webElement;
     }
 
+    public void scrollIntoView(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", getWebElement());
+    }
+
     public By getBy() {
 
         By by = null;
