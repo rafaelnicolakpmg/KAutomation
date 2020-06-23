@@ -203,4 +203,25 @@ public class ActionManager extends DSL{
 
     }
 
+    /**
+     *
+     * Perform action with the following parameters:
+     *
+     * @param action
+     *
+     * E.g.: performAction(Action.SCROLLTOTOP);
+     */
+    public void performAction(Action action){
+
+        switch (action) {
+            case SCROLLTOTOP:
+                scrollToTop();
+                break;
+            case SCROLLTOBOTTOM:
+                scrollToBottom();
+                break;
+        }
+
+    }
+
 }

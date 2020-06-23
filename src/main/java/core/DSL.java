@@ -52,6 +52,16 @@ public class DSL {
         js.executeScript("arguments[0].scrollIntoView();", webElement);
     }
 
+    protected void scrollToTop(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, 0);");
+    }
+
+    protected void scrollToBottom(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+    }
+
     // Send Keys
 
     protected void sendKeys(WebElement webElement, String value) {

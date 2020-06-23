@@ -16,6 +16,8 @@ public enum Action {
     SWITCHTODEFAULTCONTENT("Switch to Default Content", "SwitchToDefaultContent"),
     SWITCHWINDOW("Switch Window", "SwitchWindow"),
     SCROLLINTOVIEW("Scroll Into View", "ScrollIntoView"),
+    SCROLLTOTOP("Scroll To Top", "ScrollToTop"),
+    SCROLLTOBOTTOM("Scroll To Bottom", "ScrollToBottom"),
 
     // Send Keys
 
