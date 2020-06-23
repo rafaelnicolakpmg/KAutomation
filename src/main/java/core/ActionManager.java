@@ -27,7 +27,7 @@ public class ActionManager extends DSL{
 
         element.setWebElement();
 
-        element.scrollIntoView();
+        //element.scrollIntoView(); Comented since its not working properly
 
         element.highlightElement();
 
