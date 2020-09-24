@@ -16,11 +16,23 @@ public class SC_002_Google_Search extends BaseTest {
     @Before
     public void BeforeExecution(){
 
-        // Pages
-        googleHome = new GoogleHomePage(executionManager);
+        try{
 
-        // Variables from Data
-        vSearch = dataManager.getData("vSearch");
+            // Pages
+            googleHome = new GoogleHomePage(executionManager);
+
+            // Variables from Data
+            //vSearch = dataManager.getData("vSearch");
+
+        } catch (Exception e){
+
+            e.printStackTrace();
+
+        } finally {
+
+            //dataManager.closeData();
+
+        }
 
     }
 
@@ -30,13 +42,19 @@ public class SC_002_Google_Search extends BaseTest {
         try {
 
             googleHome.openGoogleHomePage();
-            googleHome.searchForByGoogleSearchButton(vSearch);
-            executionManager.setActualResult("Searched with success");
+            googleHome.searchForByGoogleSearchButton("Generico");
+            //executionManager.setActualResult("Searched with success");
+            //dataManager.setData("vWrite", "Teste de Escrita");
+
 
         } catch (Exception e) {
 
             e.printStackTrace();
-            executionManager.setActualResult("Failed");
+            //executionManager.setActualResult("Failed");
+
+        } finally {
+
+            //dataManager.closeData();
 
         }
 
@@ -55,6 +73,10 @@ public class SC_002_Google_Search extends BaseTest {
 
             e.printStackTrace();
             executionManager.setActualResult("Failed");
+
+        } finally {
+
+            dataManager.closeData();
 
         }
 

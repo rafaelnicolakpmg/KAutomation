@@ -20,10 +20,9 @@ public class ExcelUtils {
     public ExcelUtils(String excelFilePath, String sheetName){
         this.sheetName = sheetName;
         this.excelFilePath = excelFilePath;
-        this.openWorkbook();
     }
 
-    private void openWorkbook(){
+    public void openWorkbook(){
         try {
             this.arquivo = new FileInputStream(new File(excelFilePath));
             this.workbook = new XSSFWorkbook(this.arquivo);
@@ -102,11 +101,26 @@ public class ExcelUtils {
     }
 
     public void closeWorkbook(){
+
         try {
-            this.workbook.write(outFile);
-            this.arquivo.close();
-            this.outFile.close();
-            this.workbook.close();
+
+            if(this.workbook != null){
+                this.workbook.write(outFile);
+                this.workbook.close();
+                this.workbook = null;
+            }
+
+            if(this.arquivo != null){
+                this.arquivo.close();
+                this.arquivo = null;
+            }
+
+            if(this.outFile != null){
+                this.outFile.close();
+                this.outFile = null;
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

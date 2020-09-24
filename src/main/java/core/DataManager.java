@@ -15,7 +15,7 @@ public class DataManager {
         this.excelUtils = new ExcelUtils(this.getDataPath(), this.getSheet());
     }
 
-    // Setters and Getters
+    // Sheet and Path Setters and Getters
 
     public void setDataPath(String dataPath) {
         this.dataPath = dataPath;
@@ -33,12 +33,23 @@ public class DataManager {
         this.sheet = sheet;
     }
 
+    // Data Setters and Getters
+
     public String getData(String value){
-       return excelUtils.getCellStringValueByColumnName(value, 1);
+
+       excelUtils.openWorkbook();
+       String data = excelUtils.getCellStringValueByColumnName(value, 1);
+       excelUtils.closeWorkbook();
+
+       return data;
     }
 
     public void setData(String columnName, String value){
+
+        excelUtils.openWorkbook();
         excelUtils.setCellValueByColumnName(columnName, 1, value);
+        excelUtils.closeWorkbook();
+
     }
 
     public void closeData(){
