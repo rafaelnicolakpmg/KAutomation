@@ -1,8 +1,10 @@
 package utilities;
 
+import enums.WebConfigType;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,6 +22,7 @@ public class WebConfigUtils {
 
     private String webConfigLocation;
     private Document document;
+    private WebConfigType webConfigType;
 
 
     // Constructors
@@ -31,18 +34,53 @@ public class WebConfigUtils {
 
     }
 
+    // Generic Constructor
+
     public WebConfigUtils (String webConfigLocation, boolean testMode, String testUser, String testEmail){
 
         setWebConfigLocation(webConfigLocation);
         setDocument();
 
+        // Automatically sets the type to KFRAMEWORK as it's the most common type
+        setWebConfigType(WebConfigType.KFRAMEWORK);
+
         setTestMode(testMode);
         setTestUser(testUser);
         addNewTestEmail(testEmail);
         setDocumentChanges();
+
+    }
+
+    // Constructor with webConfigType
+
+    public WebConfigUtils (WebConfigType webConfigType, String webConfigLocation, boolean testMode, String testUser, String testEmail){
+
+        setWebConfigLocation(webConfigLocation);
+        setDocument();
+
+        setWebConfigType(webConfigType);
+
+        setTestMode(testMode);
+        setTestUser(testUser);
+        addNewTestEmail(testEmail);
+        setDocumentChanges();
+
+    }
+
+    public WebConfigUtils (){
+
     }
 
     // Getters & Setters
+
+
+    public WebConfigType getWebConfigType() {
+        return webConfigType;
+    }
+
+    public void setWebConfigType(WebConfigType webConfigType) {
+        this.webConfigType = webConfigType;
+    }
 
     public String getWebConfigLocation() {
         return webConfigLocation;
@@ -74,8 +112,9 @@ public class WebConfigUtils {
 
     }
 
-    public void setTestMode(boolean testMode){
+    // Test Mode Settings
 
+    public void setTestModeKFramework(boolean testMode){
         Node application = document.getElementsByTagName("application").item(0);
 
         NamedNodeMap applicationAttributes = application.getAttributes();
@@ -87,10 +126,102 @@ public class WebConfigUtils {
         } else {
             testModeAttribute.setTextContent("false");
         }
+    }
+
+    public void setTestModeAppSettings(boolean testMode){
+
+        Node appSettings = document.getElementsByTagName("appSettings").item(0);
+
+        NodeList add = appSettings.getChildNodes();
+
+        for (int i = 0; i < add.getLength(); i++){
+
+            Node element = add.item(i);
+
+            NamedNodeMap addAttributes = element.getAttributes();
+
+            try{
+
+                Node key = addAttributes.getNamedItem("key");
+                String keyLabel = key.getNodeValue();
+
+                if(keyLabel.equals("testmode")){
+
+                    Node value = addAttributes.getNamedItem("value");
+
+                    if(testMode){
+
+                        value.setTextContent("true");
+                        break;
+
+                    } else {
+
+                        value.setTextContent("false");
+                        break;
+
+                    }
+
+                }
+
+            } catch (Exception e){
+
+            }
+
+        }
 
     }
 
-    public void setTestUser(String testUser){
+    public void setTestMode(boolean testMode){
+        switch (this.webConfigType){
+            case KFRAMEWORK:
+                setTestModeKFramework(testMode);
+                break;
+            case APPSETTINGS:
+                setTestModeAppSettings(testMode);
+                break;
+        }
+    }
+
+    // Test User Settings
+
+    public void setTestUserAppSettings(String testUser){
+
+        Node appSettings = document.getElementsByTagName("appSettings").item(0);
+
+        NodeList add = appSettings.getChildNodes();
+
+        for (int i = 0; i < add.getLength(); i++){
+
+            Node element = add.item(i);
+
+            NamedNodeMap addAttributes = element.getAttributes();
+
+            try{
+
+                Node key = addAttributes.getNamedItem("key");
+                String keyLabel = key.getNodeValue();
+
+                if(keyLabel.equals("testuser")){
+
+                    Node value = addAttributes.getNamedItem("value");
+
+                    value.setTextContent(testUser);
+
+                    break;
+
+                }
+
+            } catch (Exception e){
+
+            }
+
+        }
+
+    }
+
+
+
+    public void setTestUserKFramework(String testUser){
 
         Node application = document.getElementsByTagName("application").item(0);
 
@@ -101,6 +232,19 @@ public class WebConfigUtils {
         testUserAttribute.setTextContent("br\\" + testUser);
 
     }
+
+    public void setTestUser(String testUser){
+        switch (this.webConfigType){
+            case KFRAMEWORK:
+                setTestUserKFramework(testUser);
+                break;
+            case APPSETTINGS:
+                setTestUserAppSettings(testUser);
+                break;
+        }
+    }
+
+    // Test Email Settings
 
     public void setTestEmail(String newEmail){
 
@@ -114,7 +258,61 @@ public class WebConfigUtils {
 
     }
 
-    public void addNewTestEmail(String newEmail){
+    public void addNewTestEmailAppSettings(String newEmail){
+
+        Node appSettings = document.getElementsByTagName("appSettings").item(0);
+
+        NodeList add = appSettings.getChildNodes();
+
+        for (int i = 0; i < add.getLength(); i++){
+
+            Node element = add.item(i);
+
+            NamedNodeMap addAttributes = element.getAttributes();
+
+            try{
+
+                Node key = addAttributes.getNamedItem("key");
+                String keyLabel = key.getNodeValue();
+
+                if(keyLabel.equals("testemail")){
+
+                    Node value = addAttributes.getNamedItem("value");
+
+                    String existingEmails =  value.getNodeValue();
+
+                    String[] emailsArray = existingEmails.split(",");
+
+                    boolean exists = false;
+
+                    for (String email:emailsArray) {
+                        if(email.trim().equalsIgnoreCase(newEmail)){
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    if(exists == false){
+                        if(existingEmails ==  ""){
+                            existingEmails = newEmail;
+                        } else {
+                            existingEmails += "," + newEmail;
+                        }
+                    }
+
+                    value.setTextContent(existingEmails);
+
+                }
+
+            } catch (Exception e){
+
+            }
+
+        }
+
+    }
+
+    public void addNewTestEmailKFramework(String newEmail){
 
         Node mailRelay = this.document.getElementsByTagName("mailrelay").item(0);
 
@@ -146,6 +344,108 @@ public class WebConfigUtils {
         testMail.setTextContent(existingEmails);
 
     }
+
+    public void addNewTestEmail(String newEmail){
+        switch (this.webConfigType){
+            case KFRAMEWORK:
+                addNewTestEmailKFramework(newEmail);
+                break;
+            case APPSETTINGS:
+                addNewTestEmailAppSettings(newEmail);
+                break;
+        }
+    }
+
+    public void setAppSettingsAddBasedOnValue(String value, String setValue){
+
+        Node appSettings = document.getElementsByTagName("appSettings").item(0);
+
+        NodeList add = appSettings.getChildNodes();
+
+        for (int i = 0; i < add.getLength(); i++){
+
+            Node element = add.item(i);
+
+            NamedNodeMap addAttributes = element.getAttributes();
+
+            try{
+
+                Node key = addAttributes.getNamedItem("key");
+
+                String keyLabel = key.getNodeValue();
+
+                if(keyLabel.equals(value)){
+
+                    Node valueNode = addAttributes.getNamedItem("value");
+
+                    valueNode.setTextContent(setValue);
+
+                    break;
+
+                }
+
+            } catch (Exception e){
+
+            }
+
+        }
+
+    }
+
+    public void addNewAppSettingsAddBasedOnValue(String value, String newValue){
+
+        Node appSettings = document.getElementsByTagName("appSettings").item(0);
+
+        NodeList add = appSettings.getChildNodes();
+
+        for (int i = 0; i < add.getLength(); i++){
+
+            Node element = add.item(i);
+
+            NamedNodeMap addAttributes = element.getAttributes();
+
+            try{
+
+                Node key = addAttributes.getNamedItem("key");
+                String keyLabel = key.getNodeValue();
+
+                if(keyLabel.equals(value)){
+
+                    Node valueNode = addAttributes.getNamedItem("value");
+
+                    String existingValues =  valueNode.getNodeValue();
+
+                    String[] emailsArray = existingValues.split(",");
+
+                    boolean exists = false;
+
+                    for (String email:emailsArray) {
+                        if(email.trim().equalsIgnoreCase(newValue)){
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    if(exists == false){
+                        if(existingValues ==  ""){
+                            existingValues = newValue;
+                        } else {
+                            existingValues += "," + newValue;
+                        }
+                    }
+
+                    valueNode.setTextContent(existingValues);
+
+                }
+
+            } catch (Exception e){
+
+            }
+
+        }
+    }
+
+    //Apply changes to the .xml Document
 
     public void setDocumentChanges(){
 

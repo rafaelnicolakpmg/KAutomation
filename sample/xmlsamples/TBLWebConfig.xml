@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=301879
+  -->
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    <sectionGroup name="kframework">
+      <section name="application" type="br.kpmg.Framework64.ConfigSections.ApplicationSection, br.kpmg.Framework64" />
+      <section name="dataconnection" type="br.kpmg.Framework64.ConfigSections.DataConnectionSection, br.kpmg.Framework64" />
+      <section name="securityaccess" type="br.kpmg.Framework64.ConfigSections.SecurityKportalAccessSection, br.kpmg.Framework64" />
+      <section name="utilities" type="br.kpmg.Framework64.ConfigSections.UtilitiesSection, br.kpmg.Framework64" />
+    </sectionGroup>
+  </configSections>
+  <!-- Configuracoes do framework..-->
+  <kframework>
+    <!--Nome da aplicacao-->
+    <application webname="KPortal 2.0: TBL" name="tbl" testmode="false" testuser="br\vferreira" environment="Test" contextname="TBLContext" linkedserver="KPORTAL.D_KPORTAL" kdocsurl="kdocs.homolog" />
+    <utilities>
+      <mailrelay enable="true" testmode="false" testemail="pformagio@kpmg.com.br" smtphost="smtprelay.br.kworld.kpmg.com" smtpport="25" emailerror="jaelsonfilho@kpmg.com.br" />
+    </utilities>
+  </kframework>
+  <connectionStrings>
+    <add name="TBLContext" connectionString="Data Source=test.sql.br.kworld.kpmg.com\systems_teste;Initial Catalog=TBL;Persist Security Info=True;MultipleActiveResultSets=True;Integrated Security = SSPI" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <appSettings>
+    <add key="webpages:Version" value="3.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="EmailBox" value="br-fmlearning@kpmg.com.br" />
+    <add key="EmailDisplayName" value="KPMG Business School Brasil" />
+    <add key="aspnet:MaxJsonDeserializerMembers" value="150000" />
+  </appSettings>
+  <system.web>
+    <customErrors mode="Off" />
+    <compilation targetFramework="4.5" />
+    <httpRuntime targetFramework="4.5" />
+    <authentication mode="Windows" />
+    <authorization>
+      <deny users="?" />
+    </authorization>
+    <globalization uiCulture="pt-BR" culture="pt-BR" />
+  </system.web>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" culture="neutral" publicKeyToken="30ad4fe6b2a6aeed" />
+        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.2.0" newVersion="5.2.2.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-1.1.0.0" newVersion="1.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="mssqllocaldb" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <system.webServer>
+        <security>
+            <authentication>
+                <windowsAuthentication enabled="true" />
+                <anonymousAuthentication enabled="false" />
+            </authentication>
+        </security>
+  </system.webServer>
+</configuration>

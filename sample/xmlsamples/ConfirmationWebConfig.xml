@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!--
+  For more information on how to configure your ASP.NET application, please visit
+  https://go.microsoft.com/fwlink/?LinkId=301879
+  --><configuration>
+  <configSections>
+  <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+  <section name="entityFramework" requirePermission="false" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+  </configSections>
+  <connectionStrings>
+    <!--<add name="ConfirmationContext" connectionString="metadata=res://*/Context.ConfirmationModel.csdl|res://*/Context.ConfirmationModel.ssdl|res://*/Context.ConfirmationModel.msl;provider=System.Data.SqlClient;provider=System.Data.SqlClient;provider connection string=&quot;data source=dev.sql.br.kworld.kpmg.com\systems_dev;initial catalog=ConfirmationsPortalv2;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>-->
+    <add connectionString="Data Source=test.sql.br.kworld.kpmg.com\systems_teste;Initial Catalog=ConfirmationsPortalv2;Persist Security Info=True;MultipleActiveResultSets=True;Integrated Security = SSPI;MultipleActiveResultSets=True" name="ConfirmationContext" providerName="System.Data.SqlClient"/>
+    <!--<add name="ConfirmationContext" connectionString="metadata=res://*/Context.ConfirmationModel.csdl|res://*/Context.ConfirmationModel.ssdl|res://*/Context.ConfirmationModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=SRVDEVKPMGSQL01;initial catalog=ConfirmationsPortalv2;user id=USR_CONFIRMATION;password=kPmg_Confirm@tion;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient"/>-->
+    <add connectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES'" name="XlsConString"/>
+    <add connectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=YES'" name="XlsxConString"/>
+  </connectionStrings>
+  <appSettings>
+    <add key="supportEmail" value="----"/>
+    <add key="supportPhone" value="+55 11 3940-3020"/>
+    <add key="uploadFolder" value="W:\Temp\ConfirmationsPortal"/>
+    <add key="portalUrl" value="https://confirmationsportal.test.br.kworld.kpmg.com"/>
+    <add key="webpages:Version" value="3.0.0.0"/>
+    <add key="webpages:Enabled" value="false"/>
+    <add key="ClientValidationEnabled" value="true"/>
+    <add key="UnobtrusiveJavaScriptEnabled" value="true"/>
+    <add key="MailDomain" value="@kpmg.com.br"/>
+    <add key="statusListDashboard2a" value=" 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20"/>
+    <add key="statusListDashboard2b" value=" 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20"/>
+    <add key="statusListDashboard1" value="10, 11, 12, 13, 14, 15, 16, 17, 18"/>
+    <add key="ReceivedLettersStatusLessThan" value="14"/>
+    <add key="SentLettersStatusLessThan" value="12"/>
+    <add key="confirmationLetterMailSubjectPT" value="Carta de confirmacao para [CORPORATE_NAME] em [CONFIRMATION_DATE]"/>
+    <add key="confirmationLetterMailSubjectEN" value="Confirmation Letter for [CORPORATE_NAME] as at [CONFIRMATION_DATE]"/>
+    <add key="testmode" value="false"/>
+    <add key="testemail" value="BR-TRDKYSMGDias@kpmg.com.br,eduardoqueiroz@kpmg.com.br"/>
+    <add key="testuser" value="br-trdkysmgdias"/>
+    <add key="MaxThreads" value="10"/>
+    <add key="ExpirationTimeAntiForgery" value="8"/>
+    <add key="logPath" value="W:\Temp\ConfirmationsPortal\ConfirmationsLog"/>
+    <add key="cryptPW" value="rIuBhX+F___Q5YwArw6JmenA=="/>
+  </appSettings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.6.1"/>
+      </system.Web>
+  -->
+  <system.web>
+    <compilation targetFramework="4.8"/>
+    <httpRuntime targetFramework="4.6.1"/>
+    <authentication mode="Windows"/>
+    <authorization>
+      <deny users="?"/>
+    </authorization>
+    <!--<customErrors mode="Off" defaultRedirect="~/Error/"/>-->
+    <customErrors defaultRedirect="~/Error/" mode="RemoteOnly">
+      <error redirect="~/PaginaNaoEncontrada" statusCode="403"/>
+    </customErrors>
+    <globalization culture="pt-BR" uiCulture="pt-BR"/>
+    <httpModules>
+      <add name="TelemetryCorrelationHttpModule" type="Microsoft.AspNet.TelemetryCorrelation.TelemetryCorrelationHttpModule, Microsoft.AspNet.TelemetryCorrelation"/>
+    </httpModules>
+  </system.web>
+  <system.webServer>
+    <httpProtocol>
+      <customHeaders>
+        <clear/>
+        <add name="Cache-Control" value=" max-age=31536000, s-maxage=31536000"/>
+        <add name="Pragma" value="public,max-age=31536000, s-maxage=31536000"/>
+        <add name="Expires" value="0"/>
+        <add name="X-Content-Type-Options" value="nosniff"/>
+        <add name="X-XSS-Protection" value="1; mode=block"/>
+        <add name="X-Frame-Options" value="ALLOW-FROM https://apiconfirmationshom.kpmg.com.br/ https://www.google.com/ https://get.websignerplugin.com/"/>
+        <add name="Content-Security-Policy" value="default-src 'self' *.br.kworld.kpmg.com; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/api2/ *.br.kworld.kpmg.com 'unsafe-eval'; style-src 'self' *.br.kworld.kpmg.com 'unsafe-inline'; frame-src https://apiconfirmationshom.kpmg.com.br/ https://www.google.com/ https://get.websignerplugin.com/; img-src 'self' data:;"/>
+        <add name="X-Powered-By" value="ASP.NET"/>
+      </customHeaders>
+    </httpProtocol>
+    <validation validateIntegratedModeConfiguration="false"/>
+        <security>
+            <authentication>
+                <windowsAuthentication enabled="true"/>
+                <anonymousAuthentication enabled="false"/>
+            </authentication>
+        </security>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Antlr3.Runtime" publicKeyToken="eb42632606e9261f"/>
+        <bindingRedirect newVersion="3.5.0.2" oldVersion="0.0.0.0-3.5.0.2"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Diagnostics.DiagnosticSource" publicKeyToken="cc7b13ffcd2ddd51"/>
+        <bindingRedirect newVersion="4.0.5.0" oldVersion="0.0.0.0-4.0.5.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect newVersion="1.1.0.0" oldVersion="0.0.0.0-1.1.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect newVersion="1.6.5135.21930" oldVersion="0.0.0.0-1.6.5135.21930"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed"/>
+        <bindingRedirect newVersion="12.0.0.0" oldVersion="0.0.0.0-12.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect newVersion="3.0.0.0" oldVersion="0.0.0.0-3.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect newVersion="5.2.7.0" oldVersion="0.0.0.0-5.2.7.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect newVersion="3.0.0.0" oldVersion="0.0.0.0-3.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="ExcelDataReader" publicKeyToken="93517dbe6a4012fa"/>
+        <bindingRedirect newVersion="3.6.0.0" oldVersion="0.0.0.0-3.6.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="System.Numerics.Vectors" publicKeyToken="b03f5f7f11d50a3a"/>
+        <bindingRedirect newVersion="4.1.4.0" oldVersion="0.0.0.0-4.1.4.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a"/>
+        <bindingRedirect newVersion="4.0.6.0" oldVersion="0.0.0.0-4.0.6.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="System.Buffers" publicKeyToken="cc7b13ffcd2ddd51"/>
+        <bindingRedirect newVersion="4.0.3.0" oldVersion="0.0.0.0-4.0.3.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="System.Memory" publicKeyToken="cc7b13ffcd2ddd51"/>
+        <bindingRedirect newVersion="4.0.1.1" oldVersion="0.0.0.0-4.0.1.1"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="Microsoft.Extensions.Primitives" publicKeyToken="adb9793829ddae60"/>
+        <bindingRedirect newVersion="3.1.2.0" oldVersion="0.0.0.0-3.1.2.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="Microsoft.Extensions.Configuration.Abstractions" publicKeyToken="adb9793829ddae60"/>
+        <bindingRedirect newVersion="3.1.2.0" oldVersion="0.0.0.0-3.1.2.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="Microsoft.Extensions.DependencyInjection.Abstractions" publicKeyToken="adb9793829ddae60"/>
+        <bindingRedirect newVersion="3.1.2.0" oldVersion="0.0.0.0-3.1.2.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="Microsoft.Extensions.Options" publicKeyToken="adb9793829ddae60"/>
+        <bindingRedirect newVersion="3.1.2.0" oldVersion="0.0.0.0-3.1.2.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="Microsoft.Extensions.Configuration.Binder" publicKeyToken="adb9793829ddae60"/>
+        <bindingRedirect newVersion="3.1.2.0" oldVersion="0.0.0.0-3.1.2.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity culture="neutral" name="SimpleInjector" publicKeyToken="984cb50dea722e99"/>
+        <bindingRedirect newVersion="4.10.2.0" oldVersion="0.0.0.0-4.10.2.0"/>
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <system.webServer>
+    <modules>
+      <remove name="TelemetryCorrelationHttpModule"/>
+      <add name="TelemetryCorrelationHttpModule" preCondition="managedHandler" type="Microsoft.AspNet.TelemetryCorrelation.TelemetryCorrelationHttpModule, Microsoft.AspNet.TelemetryCorrelation"/>
+    </modules>
+  </system.webServer>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="mssqllocaldb"/>
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer"/>
+    </providers>
+  </entityFramework>
+  <system.codedom>
+    <compilers>
+      <compiler compilerOptions="/langversion:default /nowarn:1659;1699;1701" extension=".cs" language="c#;cs;csharp" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4"/>
+      <compiler compilerOptions="/langversion:default /nowarn:41008 /define:_MYTYPE=\&quot;Web\&quot; /optionInfer+" extension=".vb" language="vb;vbs;visualbasic;vbscript" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4"/>
+    </compilers>
+  </system.codedom>
+</configuration>
