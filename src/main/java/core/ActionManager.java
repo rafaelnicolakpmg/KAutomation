@@ -57,17 +57,20 @@ public class ActionManager extends DSL{
      * Perform action on elements with the following parameters:
      *
      * @param action Action
-     * @param id ID
+     * @param value ID
      *
      * E.g.: performAction(Action.switchWindow, "idWindow");
      */
-    public void performAction(Action action, String id){
+    public void performAction(Action action, String value){
 
         // beforeAction
 
         switch (action) {
             case SWITCHWINDOW:
-                switchWindow(id);
+                switchWindow(value);
+                break;
+            case SENDKEYSALERT:
+                sendKeysAlert(value);
                 break;
         }
 
@@ -211,7 +214,9 @@ public class ActionManager extends DSL{
      *
      * E.g.: performAction(Action.SCROLLTOTOP);
      */
-    public void performAction(Action action){
+    public String performAction(Action action){
+
+        String valueToReturn = null;
 
         switch (action) {
             case SCROLLTOTOP:
@@ -220,7 +225,18 @@ public class ActionManager extends DSL{
             case SCROLLTOBOTTOM:
                 scrollToBottom();
                 break;
+            case ACCEPTALERT:
+                acceptAlert();
+                break;
+            case DISMISSALERT:
+                dismissAlert();
+                break;
+            case GETALERTTEXT:
+                valueToReturn = getAlertText();
+                break;
         }
+
+        return valueToReturn;
 
     }
 
