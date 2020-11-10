@@ -30,6 +30,16 @@ public class CampoTestePage extends BasePage {
 
         action.performAction(Action.GET, map.url);
 
+        action.performAction(Action.CLICK, map.alertButton);
+
+        action.performAction(Action.DISMISSALERT);
+
+        action.performAction(Action.CLICK, map.alertButton);
+
+        action.performAction(Action.ACCEPTALERT);
+
+
+
         Thread.sleep(5000);
 
     }
