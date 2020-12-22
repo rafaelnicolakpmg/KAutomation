@@ -32,8 +32,12 @@ public class DSL {
     }
 
     protected void switchToParentFrame(Action action){
-        if(action != Action.SWITCHTOFRAME){
-            driver.switchTo().parentFrame();
+        try {
+            if (action != Action.SWITCHTOFRAME) {
+                driver.switchTo().parentFrame();
+            }
+        } catch (UnhandledAlertException e){
+            System.out.println("Found frame!");
         }
     }
 

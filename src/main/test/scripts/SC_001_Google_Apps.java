@@ -30,9 +30,12 @@ public class SC_001_Google_Apps extends BaseTest {
         try {
 
             googleHome.openGoogleHomePage();
-            googleHome.openCalendarOnGoogleApps();
-            googleLogin.loginOnGoogle(vGoogleAccount, vGooglePassword);
-            googleLogin.verifyLoginOnGoogle();
+
+            System.out.println(vGoogleAccount);
+
+            //googleHome.openCalendarOnGoogleApps();
+            //googleLogin.loginOnGoogle(vGoogleAccount, vGooglePassword);
+            //googleLogin.verifyLoginOnGoogle();
 
         } catch (Exception e) {
             e.printStackTrace();

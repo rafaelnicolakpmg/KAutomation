@@ -4,6 +4,7 @@ import enums.Action;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
@@ -19,6 +20,7 @@ public class ScreenShotter {
     private String scenarioName;
     private String testCaseName;
     private String evidencesPath;
+    private String alertScreenPath = "";
 
     // Constructors
 
@@ -61,16 +63,34 @@ public class ScreenShotter {
     }
 
     public String takeScreenshot(Action action){
-        File file = this.scrShot.getScreenshotAs(OutputType.FILE);
 
-        String label = createActionLabel(action) + ".png";
+        File file = null;
 
-        File finalFile = new File(this.evidencesPath + label);
+        Boolean foundAlert = false;
+
         try {
-            FileUtils.copyFile(file, finalFile);
-        } catch (IOException e) {
-            e.printStackTrace();
+            file = this.scrShot.getScreenshotAs(OutputType.FILE);
+        } catch (UnhandledAlertException e){
+            System.out.println("Found alert!");
+            foundAlert = true;
         }
-        return finalFile.getAbsolutePath();
+
+        if(foundAlert){
+
+            return this.dir + File.separator + "sample" + File.separator + "imgsamples" + File.separator + "alerta.png";
+
+        }else {
+
+            String label = createActionLabel(action) + ".png";
+
+            File finalFile = new File(this.evidencesPath + label);
+
+            try {
+                FileUtils.copyFile(file, finalFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return finalFile.getAbsolutePath();
+        }
     }
 }

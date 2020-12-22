@@ -47,6 +47,28 @@ public class CampoTestePage extends BasePage {
         action.performAction(Action.CLICK, map.alertBtn);
         action.performAction(Action.ACCEPTALERT);
 
+        action.performAction(Action.CLICK, map.alertButton);
+
+        action.performAction(Action.DISMISSALERT);
+
+        action.performAction(Action.CLICK, map.alertButton);
+
+        action.performAction(Action.ACCEPTALERT);
+
+        action.performAction(Action.CLICK, map.confirmButton);
+
+        action.performAction(Action.ACCEPTALERT);
+
+        action.performAction(Action.ACCEPTALERT);
+
+        action.performAction(Action.CLICK, map.promptButton);
+
+        action.performAction(Action.SENDKEYSALERT, "Teste");
+
+        String teste = action.performAction(Action.GETALERTTEXT);
+
+        System.out.println("Mensagem do alert:" + teste);
+
     }
 
 }
