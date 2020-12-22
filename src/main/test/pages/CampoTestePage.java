@@ -38,6 +38,22 @@ public class CampoTestePage extends BasePage {
 
         action.performAction(Action.ACCEPTALERT);
 
+        action.performAction(Action.CLICK, map.confirmButton);
+
+        action.performAction(Action.ACCEPTALERT);
+
+        action.performAction(Action.ACCEPTALERT);
+
+        action.performAction(Action.CLICK, map.promptButton);
+
+        action.performAction(Action.SENDKEYSALERT, "Teste");
+
+        String teste = action.performAction(Action.GETALERTTEXT);
+
+        System.out.println("Mensagem do alert:" + teste);
+
+        Thread.sleep(5000);
+
 
 
         Thread.sleep(5000);

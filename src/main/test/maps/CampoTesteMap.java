@@ -18,4 +18,6 @@ public class CampoTesteMap extends BasePage {
 
     public Element confirmButton = new Element(InputMethod.XPATH, "//input[@id='confirm']");
 
+    public Element promptButton = new Element(InputMethod.ID, "prompt");
+
 }
