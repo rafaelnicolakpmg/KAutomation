@@ -11,10 +11,18 @@ public class SC_001_CampoTeste extends BaseTest {
 
     public CampoTestePage campoTestePage;
 
+    private String vName;
+    private String vLastName;
+    private String alertText;
+
     @Before
     public void BeforeExecution(){
         // Pages
         campoTestePage = new CampoTestePage(executionManager);
+
+        //Data
+        vName = dataManager.getData("vName");
+        vLastName = dataManager.getData("vLastName");
     }
 
     @Test
@@ -23,13 +31,15 @@ public class SC_001_CampoTeste extends BaseTest {
         try {
 
             campoTestePage.accessCampoTeste();
-            campoTestePage.preencherFormulario();
-            campoTestePage.interacaoAlertas();
-
+            campoTestePage.preencherFormulario(vName, vLastName);
+            alertText = campoTestePage.interacaoAlertas();
+            dataManager.setData("vAlertText", alertText);
 
         } catch (Exception e) {
+
             e.printStackTrace();
             executionManager.setActualResult("Failed");
+
         }
     }
 

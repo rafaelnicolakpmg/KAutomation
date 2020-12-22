@@ -32,42 +32,27 @@ public class CampoTestePage extends BasePage {
 
     }
 
-    public void preencherFormulario(){
+    public void preencherFormulario(String name, String lastName){
 
-        action.performAction(Action.SENDKEYS, map.nomeInput, "Matheus");
-        action.performAction(Action.SENDKEYS, map.sobrenomeInput, "Dias");
+        action.performAction(Action.SENDKEYS, map.nomeInput, name);
+        action.performAction(Action.SENDKEYS, map.sobrenomeInput, lastName);
         action.performAction(Action.CLICK, map.masculinoRB);
         action.performAction(Action.CLICK, map.vegetarianoCB);
         action.performAction(Action.SELECTBYVISIBLETEXT, map.escolaridadeSelect, "Superior");
 
     }
 
-    public void interacaoAlertas(){
+    public String interacaoAlertas(){
 
         action.performAction(Action.CLICK, map.alertBtn);
         action.performAction(Action.ACCEPTALERT);
 
-        action.performAction(Action.CLICK, map.alertButton);
-
-        action.performAction(Action.DISMISSALERT);
-
-        action.performAction(Action.CLICK, map.alertButton);
-
-        action.performAction(Action.ACCEPTALERT);
-
-        action.performAction(Action.CLICK, map.confirmButton);
-
-        action.performAction(Action.ACCEPTALERT);
-
-        action.performAction(Action.ACCEPTALERT);
-
-        action.performAction(Action.CLICK, map.promptButton);
-
+        action.performAction(Action.CLICK, map.promptBtn);
         action.performAction(Action.SENDKEYSALERT, "Teste");
+        String alertText = action.performAction(Action.GETALERTTEXT);
+        action.performAction(Action.ACCEPTALERT);
 
-        String teste = action.performAction(Action.GETALERTTEXT);
-
-        System.out.println("Mensagem do alert:" + teste);
+        return alertText;
 
     }
 

@@ -40,7 +40,7 @@ public class DriverFactory {
 
         System.setProperty("webdriver.chrome.driver", driverPath);
         options.setExperimentalOption("useAutomationExtension", false);
-        //options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+        options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
 
         switch (Propriedades.browser) {
             case FIREFOX:
