@@ -23,6 +23,8 @@ public class SC_001_CampoTeste extends BaseTest {
         try {
 
             campoTestePage.accessCampoTeste();
+            campoTestePage.preencherFormulario();
+            campoTestePage.interacaoAlertas();
 
 
         } catch (Exception e) {

@@ -30,7 +30,22 @@ public class CampoTestePage extends BasePage {
 
         action.performAction(Action.GET, map.url);
 
-        Thread.sleep(5000);
+    }
+
+    public void preencherFormulario(){
+
+        action.performAction(Action.SENDKEYS, map.nomeInput, "Matheus");
+        action.performAction(Action.SENDKEYS, map.sobrenomeInput, "Dias");
+        action.performAction(Action.CLICK, map.masculinoRB);
+        action.performAction(Action.CLICK, map.vegetarianoCB);
+        action.performAction(Action.SELECTBYVISIBLETEXT, map.escolaridadeSelect, "Superior");
+
+    }
+
+    public void interacaoAlertas(){
+
+        action.performAction(Action.CLICK, map.alertBtn);
+        action.performAction(Action.ACCEPTALERT);
 
     }
 

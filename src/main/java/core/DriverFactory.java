@@ -19,7 +19,7 @@ public class DriverFactory {
 
     private static String driverPath;
 
-    private static DesiredCapabilities options = new DesiredCapabilities();
+    private static ChromeOptions options = new ChromeOptions();
     private static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<WebDriver>() {
         @Override
         protected synchronized WebDriver initialValue() {
@@ -39,8 +39,8 @@ public class DriverFactory {
         }
 
         System.setProperty("webdriver.chrome.driver", driverPath);
-        //options.setExperimentalOption("useAutomationExtension", false);
-        options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+        options.setExperimentalOption("useAutomationExtension", false);
+        //options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
 
         switch (Propriedades.browser) {
             case FIREFOX:
