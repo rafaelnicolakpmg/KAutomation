@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class ScreenShotter {
 
-    private WebDriver driver = DriverFactory.getDriver(); //colocar no construtor a instanciação
+    private WebDriver driver;  //colocar no construtor a instanciação
     private TakesScreenshot scrShot;
     private String dir = System.getProperty("user.dir"); //Corrigir com uma varialve no utils
     private String scenarioName;
@@ -25,6 +25,7 @@ public class ScreenShotter {
     // Constructors
 
     public ScreenShotter(String scenarioName, String testCaseName, String evidencesPath) {
+        driver = DriverFactory.getDriver();
         this.scrShot = (TakesScreenshot) driver;
         this.setScenarioName(scenarioName);
         this.setTestCaseName(testCaseName);
