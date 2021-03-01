@@ -4,8 +4,6 @@ import core.BaseTest;
 import org.junit.Before;
 import org.junit.Test;
 import pages.CampoTestePage;
-import pages.GoogleHomePage;
-import pages.GoogleLoginPage;
 
 public class SC_001_CampoTeste extends BaseTest {
 
