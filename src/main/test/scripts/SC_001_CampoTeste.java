@@ -2,6 +2,7 @@ package scripts;
 
 import core.BaseTest;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import pages.CampoTestePage;
 
@@ -31,6 +32,25 @@ public class SC_001_CampoTeste extends BaseTest {
             campoTestePage.accessCampoTeste();
             campoTestePage.preencherFormulario(vName, vLastName);
             alertText = campoTestePage.interacaoAlertas();
+            dataManager.setData("vAlertText", alertText);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            executionManager.setActualResult("Failed");
+
+        }
+    }
+
+    @Test
+    public void TC_002_Teste_Alert_Campo_Teste(){
+
+        try {
+
+            campoTestePage.accessCampoTeste();
+            campoTestePage.preencherFormulario(vName, vLastName);
+            alertText = campoTestePage.interacaoAlertas();
+            campoTestePage.aceitarUltimoAlert();
             dataManager.setData("vAlertText", alertText);
 
         } catch (Exception e) {

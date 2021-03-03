@@ -56,4 +56,8 @@ public class CampoTestePage extends BasePage {
 
     }
 
+    public void aceitarUltimoAlert(){
+        action.performAction(Action.ACCEPTALERT);
+    }
+
 }

@@ -3,7 +3,6 @@ package maps;
 import core.BasePage;
 import core.Element;
 import enums.InputMethod;
-import org.openqa.selenium.devtools.input.Input;
 
 import java.io.File;
 

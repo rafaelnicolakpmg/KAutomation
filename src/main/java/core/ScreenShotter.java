@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static core.DriverFactory.getDriver;
+
 public class ScreenShotter {
 
     private WebDriver driver;  //colocar no construtor a instanciação
@@ -25,7 +27,7 @@ public class ScreenShotter {
     // Constructors
 
     public ScreenShotter(String scenarioName, String testCaseName, String evidencesPath) {
-        driver = DriverFactory.getDriver();
+        driver = getDriver();
         this.scrShot = (TakesScreenshot) driver;
         this.setScenarioName(scenarioName);
         this.setTestCaseName(testCaseName);
