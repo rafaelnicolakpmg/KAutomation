@@ -46,11 +46,12 @@ public class CampoTesteMap extends BasePage {
     public Element alertBtn = new Element(InputMethod.ID, "alert");
     public Element confirmBtn = new Element(InputMethod.ID, "confirm");
     public Element promptBtn = new Element(InputMethod.ID, "prompt");
-
     public Element alertButton = new Element(InputMethod.XPATH, "//input[@id='alert']");
-
     public Element confirmButton = new Element(InputMethod.XPATH, "//input[@id='confirm']");
-
     public Element promptButton = new Element(InputMethod.ID, "prompt");
+
+    //  Table
+
+    public Element table = new Element(InputMethod.XPATH, "//table[@id='elementosForm:tableUsuarios']");
 
 }

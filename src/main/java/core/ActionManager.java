@@ -3,6 +3,8 @@ package core;
 import enums.Action;
 import org.openqa.selenium.Keys;
 
+import java.util.List;
+
 public class ActionManager extends DSL{
 
     // Variables
@@ -15,7 +17,7 @@ public class ActionManager extends DSL{
         this.executionManager = executionManager;
     }
 
-    // Methods
+    // Before and After Methods
 
     /**
      * Execute pre actions, like, generate WebElement instance, screenshot, highlight element, ...
@@ -52,6 +54,8 @@ public class ActionManager extends DSL{
         this.switchToParentFrame(action);
 
     }
+
+    //  Action Methods
 
     /**
      * Perform action on elements with the following parameters:
@@ -124,14 +128,41 @@ public class ActionManager extends DSL{
      *
      * @param action  Action
      * @param element Element
+     * @param valorString Valor String
+     * @param valorInteiro Valor Integer
+     *
+     * E.g.: String value = performAction(Action.GETTEXTFROMTABLECELL, element, columnName, 2);
+     */
+    public String performAction(Action action, Element element, String valorString, int valorInteiro) {
+
+        String value = null;
+        beforeAction(action, element);
+
+        switch (action) {
+            case GETTEXTFROMTABLECELL:
+                value = this.retornaValorCelula(element.getWebElement(), valorString, valorInteiro);
+                break;
+        }
+
+        afterAction(action, element);
+
+        return value;
+    }
+
+    /**
+     * Perform action on elements with the following parameters:
+     *
+     * @param action  Action
+     * @param element Element
      * @param searchValue String
      *
      * E.g.: performAction(Action.SENDKEYS, element, "Valor");
-     * E.g.: String value = performAction(Action.GETATTRIBUTE, element, "title");
+     * E.g.: String value = (String) performAction(Action.GETATTRIBUTE, element, "title");
+     * E.g.: List<String> values = (List<String>) performAction(Action.GETVALUESFROMCOLUMN, element, "colunaTeste")
      */
-    public String performAction(Action action, Element element, String searchValue) {
+    public Object performAction(Action action, Element element, String searchValue) {
 
-        String value = null;
+        Object value = null;
 
         beforeAction(action, element);
 
@@ -148,6 +179,8 @@ public class ActionManager extends DSL{
             case SELECTBYVISIBLETEXT:
                 this.selectByVisibleText(element.getWebElement(), searchValue);
                 break;
+            case GETVALUESFROMCOLUMN:
+                value = this.retornaValoresColunas(element.getWebElement(), searchValue);
         }
 
         afterAction(action, element);

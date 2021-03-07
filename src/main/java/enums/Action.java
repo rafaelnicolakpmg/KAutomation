@@ -57,7 +57,12 @@ public enum Action {
     GETALERTTEXT("Get Alert Text", "GetAlertText"),
     ACCEPTALERT("Accept Alert", "AcceptAlert"),
     DISMISSALERT("Dismiss Alert", "DismissAlert"),
-    SENDKEYSALERT("Send Keys Alert", "SendKeysAlert");
+    SENDKEYSALERT("Send Keys Alert", "SendKeysAlert"),
+
+    //  Tables
+
+    GETTEXTFROMTABLECELL("Get Text From Table Cell", "GetTextFromTableCell"),
+    GETVALUESFROMCOLUMN("Get Values From Table Column", "GetValuesFromTableColumn");
 
     // Variables
 

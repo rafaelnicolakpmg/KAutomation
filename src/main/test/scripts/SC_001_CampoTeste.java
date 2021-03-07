@@ -61,4 +61,17 @@ public class SC_001_CampoTeste extends BaseTest {
         }
     }
 
+    @Test
+    public void TC_003_Teste_Tabela_Campo_Teste(){
+        try{
+
+            campoTestePage.accessCampoTeste();
+            campoTestePage.valoresTabela();
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

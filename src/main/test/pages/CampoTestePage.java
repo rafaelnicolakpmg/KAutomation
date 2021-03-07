@@ -7,6 +7,7 @@ import enums.Action;
 import maps.CampoTesteMap;
 
 import java.io.File;
+import java.util.List;
 
 public class CampoTestePage extends BasePage {
 
@@ -53,6 +54,20 @@ public class CampoTestePage extends BasePage {
         action.performAction(Action.ACCEPTALERT);
 
         return alertText;
+
+    }
+
+    public void valoresTabela(){
+
+        List<String> testes = (List<String>) action.performAction(Action.GETVALUESFROMCOLUMN, map.table, "Escolaridade");
+
+        for (String teste:testes) {
+            System.out.println(teste);
+        }
+
+        String text = (String) action.performAction(Action.GETATTRIBUTE, map.table, "id");
+
+        System.out.println(text);
 
     }
 
