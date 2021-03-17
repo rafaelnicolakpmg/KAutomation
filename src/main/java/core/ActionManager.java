@@ -2,6 +2,7 @@ package core;
 
 import enums.Action;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class ActionManager extends DSL{
     // Variables
 
     private ExecutionManager executionManager;
+    private boolean skipAction;
 
     // Constructors
 
@@ -17,7 +19,13 @@ public class ActionManager extends DSL{
         this.executionManager = executionManager;
     }
 
-    // Before and After Methods
+    // Before and After Related Methods
+
+    private boolean shouldSkipAction(Action action, WebElement element){
+
+        return (action == Action.WAITLOADING && element == null ? true:false);
+
+    }
 
     /**
      * Execute pre actions, like, generate WebElement instance, screenshot, highlight element, ...
@@ -27,15 +35,19 @@ public class ActionManager extends DSL{
      */
     private void beforeAction(Action action, Element element){
 
-        element.setWebElement();
+        skipAction = false;
 
-        //element.scrollIntoView(); Comented since its not working properly
+        element.setWebElement(action);
 
-        element.highlightElement();
+        skipAction = shouldSkipAction(action, element.getWebElementEvenIfIsNull());
 
-        executionManager.setTempScreenshotBefore(action);
+        if(skipAction != true) {
 
-        element.unhighlightElement();
+            element.highlightElement();
+            executionManager.setTempScreenshotBefore(action);
+            element.unhighlightElement();
+
+        }
 
     }
 
@@ -47,11 +59,13 @@ public class ActionManager extends DSL{
      */
     private void afterAction(Action action, Element element){
 
-        executionManager.setTempScreenshotAfter(action);
+        if(skipAction != true) {
+            executionManager.setTempScreenshotAfter(action);
+            executionManager.consolidateActionInfo(action, element);
 
-        executionManager.consolidateActionInfo(action, element);
-
-        this.switchToParentFrame(action);
+            //  Validar a Exception UnhandleAlertException no try catch do metodo abaixo
+            this.switchToParentFrame(action);
+        }
 
     }
 
@@ -150,6 +164,31 @@ public class ActionManager extends DSL{
     }
 
     /**
+     *
+     * @param action
+     * @param element
+     * @param valorString
+     * @param segundoValorString
+     * @param terceiroValorString
+     *
+     * E.g.: performAction(Action.CLICKINPUTFROMTABLECELL, elementTable, columnSearch, rowSearch, inputColumn);
+     *
+     */
+    public void performAction(Action action, Element element, String valorString, String segundoValorString, String terceiroValorString){
+
+        beforeAction(action, element);
+
+        switch (action) {
+            case CLICKINPUTFROMTABLECELL:
+                this.clicarBotaoTabela(element.getWebElement(), valorString, segundoValorString, terceiroValorString);
+                break;
+        }
+
+        afterAction(action, element);
+
+    }
+
+    /**
      * Perform action on elements with the following parameters:
      *
      * @param action  Action
@@ -162,7 +201,7 @@ public class ActionManager extends DSL{
      */
     public Object performAction(Action action, Element element, String searchValue) {
 
-        Object value = null;
+        Object value = "";
 
         beforeAction(action, element);
 
@@ -180,7 +219,8 @@ public class ActionManager extends DSL{
                 this.selectByVisibleText(element.getWebElement(), searchValue);
                 break;
             case GETVALUESFROMCOLUMN:
-                value = this.retornaValoresColunas(element.getWebElement(), searchValue);
+                value = this.retornaValoresColuna(element.getWebElement(), searchValue);
+                break;
         }
 
         afterAction(action, element);
@@ -205,8 +245,10 @@ public class ActionManager extends DSL{
         switch (action) {
             case SELECTBYINDEX:
                 this.selectByIndex(element.getWebElement(), numValue);
+                break;
             case WAITLOADING:
-                this.waitLoading(element.getWebElement(), numValue);
+                if(skipAction != true){this.waitLoading(element.getWebElement(), numValue);}
+                break;
         }
 
         afterAction(action, element);

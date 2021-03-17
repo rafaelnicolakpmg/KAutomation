@@ -57,6 +57,49 @@ public class Element {
         return this.webElement;
     }
 
+    public WebElement getWebElementEvenIfIsNull(){
+
+        return this.webElement;
+
+    }
+
+    /**
+     *
+     * This method waits for an element, in case the action is WAITLOADING it will only wait for 4 seconds
+     *
+     * @param action
+     */
+    public void setWebElement(Action action){
+        WebElement webElement = null;
+        boolean isDisplayed = false;
+        int attempts = 1;
+
+        if(inputMethod == InputMethod.URL){
+            this.webElement = webElement;
+        } else {
+
+            do {
+                try {
+                    webElement = driver.findElement(getBy());
+                    isDisplayed = true;
+                } catch (NoSuchElementException | StaleElementReferenceException e) {
+                    System.out.println("Attempt " + attempts + " of " + this.elementTimeout + " on element: " + getElementString());
+                    attempts++;
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            } while ((!isDisplayed && attempts <= this.elementTimeout) || (!isDisplayed && action == Action.WAITLOADING && attempts <= 2));
+
+            if (webElement == null) {
+                webElement = getElementInFrame();
+            }
+        }
+        this.webElement = webElement;
+    }
+
     public void setWebElement(){
 
         WebElement webElement = null;
@@ -150,7 +193,7 @@ public class Element {
     }
 
     public void highlightElement(){
-        if(inputMethod != InputMethod.URL){
+        if(inputMethod != InputMethod.URL && (this.webElement != null)){
             JavascriptExecutor js = (JavascriptExecutor) driver;
 
             int y1 = 0;
@@ -201,7 +244,7 @@ public class Element {
     }
 
     public void unhighlightElement(){
-        if(inputMethod != InputMethod.URL){
+        if(inputMethod != InputMethod.URL && (this.webElement != null)){
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("var child = document.getElementById('ElementHighLightSelenium');" +
                     "\n" +

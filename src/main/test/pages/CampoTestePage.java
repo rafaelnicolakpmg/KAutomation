@@ -69,7 +69,13 @@ public class CampoTestePage extends BasePage {
 
         System.out.println(text);
 
+        action.performAction(Action.CLICKINPUTFROMTABLECELL, map.table, "Nome", "Francisco", "Checkbox");
+        action.performAction(Action.CLICKINPUTFROMTABLECELL, map.table, "Nome", "Usuario A", "Checkbox");
+        action.performAction(Action.CLICKINPUTFROMTABLECELL, map.table, "Nome", "Doutorado", "Checkbox");
+
     }
+
+
 
     public void aceitarUltimoAlert(){
         action.performAction(Action.ACCEPTALERT);

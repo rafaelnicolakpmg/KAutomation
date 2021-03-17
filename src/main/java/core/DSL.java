@@ -216,7 +216,7 @@ public class DSL {
         return valorCelula;
     }
 
-    protected List<String> retornaValoresColunas(WebElement tabela, String colunaBusca){
+    protected List<String> retornaValoresColuna(WebElement tabela, String colunaBusca){
         //  procurar coluna do registro
         int idColuna = obterIndiceColuna(colunaBusca, tabela);
 
@@ -227,7 +227,7 @@ public class DSL {
 
         //  navega em cada linha da tabela e grava o valor da coluna correspondente em texto na lista
 
-        for (int i = 1; i < linhas.size(); i++) {
+        for (int i = 1; i <= linhas.size(); i++) {
 
             valoresColuna.add(tabela.findElement(By.xpath(".//tbody//tr[" + i + "]//td[" + idColuna + "]")).getText());
 

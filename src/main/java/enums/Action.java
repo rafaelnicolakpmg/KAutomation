@@ -62,7 +62,8 @@ public enum Action {
     //  Tables
 
     GETTEXTFROMTABLECELL("Get Text From Table Cell", "GetTextFromTableCell"),
-    GETVALUESFROMCOLUMN("Get Values From Table Column", "GetValuesFromTableColumn");
+    GETVALUESFROMCOLUMN("Get Values From Table Column", "GetValuesFromTableColumn"),
+    CLICKINPUTFROMTABLECELL("Click Input From Table Cell", "Click Input From Table Cell");
 
     // Variables
 

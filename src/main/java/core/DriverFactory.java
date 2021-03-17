@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +22,7 @@ public class DriverFactory {
     private static String driverPath;
     private static ChromeOptions chromeOptions = new ChromeOptions();
     private static EdgeOptions edgeOptions = new EdgeOptions();
+    private static SafariOptions safariOptions = new SafariOptions();
 
     // Constructors
     public DriverFactory(){}
@@ -71,6 +74,19 @@ public class DriverFactory {
                     edgeOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
 
                     driver = new EdgeDriver(edgeOptions);
+
+                    break;
+
+                case "SAFARI":
+
+                    //driverPath = System.getProperty("user.dir") + File.separator + "drivers" + File.separator + "msedgedriver.exe";
+
+                    System.setProperty("webdriver.safari.driver", "/usr/bin/safaridriver");
+
+                    //safariOptions.setExperimentalOption("useAutomationExtension", false);
+                    safariOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+
+                    driver = new SafariDriver(safariOptions);
 
                     break;
 

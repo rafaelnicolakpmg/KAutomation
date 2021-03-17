@@ -99,8 +99,14 @@ public class ExecutionManager {
     }
 
     public void consolidateActionInfo(Action action, Element element){
-        Evidence evidence = new Evidence(action, element, getTempScreenshotBefore(), getTempScreenshotAfter());
-        evidenceManager.addEvidence(evidence);
+
+        //  Valida se o elemento está nulo e verifica também se a ação é WAITLOADING
+
+        if(element != null && action != Action.WAITLOADING) {
+            Evidence evidence = new Evidence(action, element, getTempScreenshotBefore(), getTempScreenshotAfter());
+            evidenceManager.addEvidence(evidence);
+        }
+
         cleanTempScreenshots();
     }
 
