@@ -9,6 +9,12 @@ public class DataManager {
 
     // Constructors
 
+    public DataManager(String dataPath){
+        this.setDataPath(dataPath);
+        this.setSheet("Data");
+        this.excelUtils = new ExcelUtils(this.getDataPath(), this.getSheet());
+    }
+
     public DataManager(String dataPath, String sheet){
         this.setDataPath(dataPath);
         this.setSheet(sheet);

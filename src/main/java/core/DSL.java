@@ -4,6 +4,7 @@ import enums.Action;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 

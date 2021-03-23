@@ -13,7 +13,9 @@ import org.openqa.selenium.safari.SafariOptions;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class DriverFactory {
 
@@ -93,6 +95,8 @@ public class DriverFactory {
             }
 
             driver.manage().window().maximize();
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofMinutes(5));
+            driver.manage().timeouts().setScriptTimeout(Duration.ofMinutes(5));
 
         }
 

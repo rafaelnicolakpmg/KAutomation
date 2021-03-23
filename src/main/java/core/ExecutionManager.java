@@ -4,8 +4,11 @@ import enums.Action;
 import org.junit.Assert;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import static core.DriverFactory.killDriver;
 
@@ -30,7 +33,32 @@ public class ExecutionManager {
         this.setScenarioName(scenarioName);
         this.setEvidencesPath();
         this.setDataPath();
-        dataManager = new DataManager(this.getDataPath(), testCaseName);
+
+        Properties properties = new Properties();
+        String dir = System.getProperty("user.dir");
+
+        try {
+
+            properties.load(new FileInputStream(dir + File.separator + "properties" + File.separator + "execution.properties"));
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
+
+        String dataFormat = properties.getProperty("dbo.dataFormat");
+
+        if(dataFormat.equalsIgnoreCase("SCENARIOANDTEST")) {
+
+            dataManager = new DataManager(this.getDataPath(), testCaseName);
+
+        } else if(dataFormat.equalsIgnoreCase("ONLYSCENARIO")){
+
+            dataManager = new DataManager(this.getDataPath());
+
+        }
+
         screenShotter = new ScreenShotter(this.scenarioName, this.testCaseName, this.evidencesPath);
         evidenceManager = new EvidenceManager(this.scenarioName, this.testCaseName, this.evidencesPath);
     }
@@ -62,7 +90,7 @@ public class ExecutionManager {
 
     public String getDataPath(){
         if(this.dataPath == null){
-            this.dataPath = this.projectFolder + File.separator + "data" + File.separator + this.scenarioName + ".xlsx";
+            this.setDataPath();
         }
         return dataPath;
     }

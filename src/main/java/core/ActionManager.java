@@ -104,9 +104,9 @@ public class ActionManager extends DSL{
      *
      * E.g.: performAction(Action.CLICK, element);
      */
-    public String performAction(Action action, Element element) {
+    public Object performAction(Action action, Element element) {
 
-        String value = null;
+        Object value = null;
         beforeAction(action, element);
 
         switch (action) {
@@ -130,6 +130,11 @@ public class ActionManager extends DSL{
                 break;
             case GETTEXT:
                 value = getText(element.getWebElement());
+                break;
+            case GETVALUESFROMCOMBO:
+                value = getValuesFromCombo(element.getWebElement());
+                break;
+
         }
 
         afterAction(action, element);
