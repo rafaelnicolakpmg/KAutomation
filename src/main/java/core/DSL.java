@@ -254,6 +254,20 @@ public class DSL {
 
     }
 
+    public void clicarCelulaTabela(WebElement tabela, String colunaBusca, String linhaBusca){
+
+        //procurar coluna do registro
+        int idColuna = obterIndiceColuna(colunaBusca, tabela);
+
+        //encontrar a linha do registro
+        int idLinha = obterIndiceLinha(linhaBusca, tabela, idColuna);
+
+        //clicar no botao da celula encontrada
+        WebElement celula = tabela.findElement(By.xpath(".//tr[" + idLinha + "]/td[" + idColuna + "]"));
+        celula.click();
+
+    }
+
     protected int obterIndiceLinha(String valor, WebElement tabela, int idColuna) {
         List<WebElement> linhas = tabela.findElements(By.xpath("./tbody/tr/td[" + idColuna + "]"));
         int idLinha = -1;

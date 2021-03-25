@@ -174,6 +174,30 @@ public class ActionManager extends DSL{
      * @param element
      * @param valorString
      * @param segundoValorString
+     *
+     * E.g.: performAction(Action.CLICKTABLECELL, elementTable, columnSearch, rowSearch);
+     *
+     */
+    public void performAction(Action action, Element element, String valorString, String segundoValorString){
+
+        beforeAction(action, element);
+
+        switch (action) {
+            case CLICKTABLECELL:
+                this.clicarCelulaTabela(element.getWebElement(), valorString, segundoValorString);
+                break;
+        }
+
+        afterAction(action, element);
+
+    }
+
+    /**
+     *
+     * @param action
+     * @param element
+     * @param valorString
+     * @param segundoValorString
      * @param terceiroValorString
      *
      * E.g.: performAction(Action.CLICKINPUTFROMTABLECELL, elementTable, columnSearch, rowSearch, inputColumn);
